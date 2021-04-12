@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: addTask.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: addTask.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>allTasks = JSON.parse(localStorage.getItem('allTasks')) || [];
+selectedUser = JSON.parse(localStorage.getItem('selectedUser')) || [];
+let show = false;
+selectedUser = [];
+const Users = [
+    {
+        "name": "Alex",
+        "img": "../img/busy.png",
+        "email": "alex@web.de"
+    },
+    {
+        "name": "Christian",
+        "img": "../img/user.png",
+        "email": "christian@web.de"
+    },
+    {
+        "name": "Junus",
+        "img": "../img/userbusy.png",
+        "email": "junus.web.de"
+    },
+    {
+        "name": "Christa",
+        "img": "../img/woman.png",
+        "email": "christa@web.de"
+    }];
+
+function addTask() {
+    selectedUser = JSON.parse(localStorage.getItem('selectedUser')) || [];
+    let description = document.getElementById("description").value;
+    let title = document.getElementById("title").value;
+    let date = document.getElementById("date").value;
+    let selectorimportance = document.getElementById("importance").selectedIndex;
+    let selectorcategory = document.getElementById("category").selectedIndex;
+    let importance = document.getElementById("importance").options[selectorimportance].value;
+    let category = document.getElementById("category").options[selectorcategory].value;
+    allTasks.push(createObj(title, date, category, description, importance))
+    localStorage.setItem('allTasks', JSON.stringify(allTasks));
+    clearInput();
+    localStorage.setItem('selectedUser', JSON.stringify(""));
+}
+
+/**
+ * generates a new object 
+ * @param {string} title -title of the Task
+ * @param {number} date  -date of the Task
+ * @param {string} description  - description of the Task
+ * @param {string} importance - importance of the Task
+ * @param {string} category - category of the Task
+ * @param {object} selectecUser - object with the data 
+ * @returns 
+ */
+function createObj(title, date, category, description, importance, user) {
+    return {
+        "title": title,
+        "date": date,
+        "description": description,
+        "importance": importance,
+        "category": category,
+        "user": selectedUser
+
+    }
+
+
+}
+/**
+ * clearing the inputfields
+ */
+function clearInput() {
+    document.getElementById("title").value = "";
+    document.getElementById("date").value = "";
+    document.getElementById("importance").value;
+    document.getElementById("description").value = "";
+}
+/**
+ * generate an Alert from bootstrap after 2000ms change style 
+ */
+function alertAdded() {
+    document.getElementById("main").innerHTML += `&lt;div id="alert" class="alert alert-success" role="alert">
+    A simple success alert—check it out!
+  &lt;/div>
+    `
+    setTimeout(() => {
+        document.getElementById("alert").style.transform = "translateY(500px)"
+    }, 2000);
+}
+
+function chooseUser() {
+    if (!show) {
+
+        document.getElementById("main").innerHTML += `&lt;div id="modal" class=" modal-body">
+        &lt;div id="modalcontent" class="modal-content">
+        &lt;/div>&lt;button onclick="chooseUser()" class="btn btn-primary">close&lt;/button>
+        &lt;/div>`
+        show = true;
+        for (let i = 0; i &lt; Users.length; i++) {
+            document.getElementById("modalcontent").innerHTML += `
+            &lt;div id="${i}" onclick="selectUser(${i})" ${Users[i].email} class="user">
+           &lt;p class="name">${Users[i].name}&lt;/p>
+           &lt;img src="${Users[i].img}">
+           &lt;/div>`
+        }
+
+    }
+}
+
+function selectUser(i) {
+    document.getElementById(i).classList.add("added");
+    selectedUser.push(Users[i]);
+    localStorage.setItem('selectedUser', JSON.stringify(selectedUser));
+    console.table(selectedUser)
+}
+
+/**
+ * by register an new User create an JSON object with the data
+ * @param {string} name - name of the user 
+ * @param {string} email - email of the user
+ * @param {string} img - img of the user
+ * @returns 
+ */
+function registerUser(name, email, img) {
+    return {
+        "name": name,
+        "email": email,
+        "img": img
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#alertAdded">alertAdded</a></li><li><a href="global.html#clearInput">clearInput</a></li><li><a href="global.html#createObj">createObj</a></li><li><a href="global.html#registerUser">registerUser</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 10 2021 10:08:57 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

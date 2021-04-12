@@ -1,0 +1,38 @@
+@import ../root.sass
+header
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    width: 150px
+    height: 100vh
+    align-items: center
+    background: $background
+    #logo
+        width: 50px
+        height: 50px
+        margin: 20px 0px 0px 0px
+    nav
+        height: 50%
+        justify-content: space-between
+        display: flex
+        flex-direction: column
+        li
+            margin: 10px 0px 10px 0px!important
+        ul
+            text-align: center
+            list-style-type: none
+            padding: 0px
+            img
+                width: 30px
+                height: 30px
+                list-style: none
+                padding: 0px
+                border-radius: 50%
+                background: $passive
+                margin-bottom: 10px
+            a
+                font-weight: 600!important
+                color: $font-light
+                text-decoration: none
+                &:hover
+                    color: $font-dark

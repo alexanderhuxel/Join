@@ -1,0 +1,42 @@
+@import ../style/root.sass
+main
+    display: flex
+    width: 100vw!important
+    margin: 0px!important
+    justify-content: center
+    align-items: center
+    background: $container!important
+    form
+        background: $background
+        padding: 50px
+        border-top-left-radius: 15px
+        border-bottom-right-radius: 15px
+        border-top-right-radius: 100px
+        border-bottom-left-radius: 100px
+        color: $font-light
+        button
+            border: none!important
+            margin: 10px
+            &:nth-of-type(1)
+                background: $outside!important
+                &:hover
+                    filter: brightness(1.4)
+            &:nth-of-type(2)
+                background: $font-dark
+                &:hover
+                    background: $font-dark
+                    filter: brightness(1.4)
+
+        a
+            color: $outside
+            font-weight: 700
+            font-size: 1.2rem
+            text-decoration: none
+            border-bottom: 1px solid $outside
+            &:hover
+                color: $font-light
+                border-bottom: 1px solid $font-light
+#alert
+    position: absolute
+    transform: translateY(700px)
+    transition: ease-in-out 225ms

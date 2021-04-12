@@ -1,0 +1,45 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../javascript/main.js"></script>
+    <script src="../javascript/matrix.js"></script>
+    <link rel="stylesheet" href="../style/matrix.css">
+    <link rel="stylesheet" href="../style/header/header.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="../img/logo.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix</title>
+</head>
+
+<body onload="loadMatrix()" id="body">
+    <main>
+        <div id="matrix">
+            <div ondrop="drop(event)" ondragover="allowDrop(event)" class="quarter">
+                <h6>DO</h6>
+                <div id="do" class="container"></div>
+
+            </div>
+            <div ondrop="drop(event)" ondragover="allowDrop(event)" class="quarter">
+                <h6>SCHEDULE</h6>
+                <div id="schedule" class="container"></div>
+            </div>
+            <div ondrop="drop(event)" ondragover="allowDrop(event)" class="quarter">
+                <h6>DELEGATE</h6>
+                <div id="delegate" class="container"></div>
+            </div>
+            <div ondrop="drop(event)" ondragover="allowDrop(event)" class="quarter">
+                <h6>ELIMINATE</h6>
+                <div id="eliminate" class="container"></div>
+            </div>
+        </div>
+    </main>
+    <div id="content"></div>
+
+
+
+
+</body>
+
+</html>

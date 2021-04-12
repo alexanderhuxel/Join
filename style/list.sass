@@ -1,0 +1,59 @@
+@import ../style/root.sass
+.list-labels
+    display: flex
+    color: $background
+    font-weight: 700
+    letter-spacing: .2rem
+
+    p
+        margin: 5px
+        width: 33.33%
+#list
+    width: 100%
+    border-radius: 20px
+    height: 80%
+    overflow-y: auto
+    background: $container
+    .list-item
+        margin: 5px 0px 5px 0px
+        border-left: 5px solid red
+        border-top-left-radius: 20px
+        border-bottom-left-radius: 20px
+        display: flex
+        flex-direction: row!important
+        width: 100%
+        height: auto
+    .first
+        padding-top: 10px
+        width: 33.33%
+        display: flex
+        flex-direction: column
+        .user
+            display: flex
+            margin-left: 10px
+            .user-data
+                margin-bottom: 10px
+                p
+                    margin: 0px 0px 0px 10px!important
+        img
+            background: $font-light
+            border-radius: 50%
+            width: 50px
+            height: 50px
+    .second
+        padding-top: 10px
+        display: flex
+        flex-direction: column
+        width: 33.33%
+        p
+            &:nth-of-type(1)
+                font-weight: 700
+
+    .third
+        padding-top: 10px
+        width: 33.33%
+        display: flex
+        flex-direction: column
+        p
+            font-weight: 700
+            color: $background

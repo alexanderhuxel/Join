@@ -1,0 +1,83 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="../javascript/main.js"></script>
+    <script src="../javascript/addTask.js"></script>
+    <link rel="stylesheet" href="../style/root.css">
+    <link rel="stylesheet" href="../style/addTask.css">
+    <link rel="stylesheet" href="../style/header/header.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="../img/logo.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AddTask</title>
+</head>
+
+<body id="body">
+    <main id="main">
+        <div id="headline">
+            <h1>Add Tasks</h1>
+            <p>Learning Management System Project</p>
+        </div>
+        <div id="form">
+            <div id="ticketcreator">
+                <div id="left-form">
+                    <div class="mb-3">
+                        <h4>Title</h4>
+                        <input type="text" class="form-control" id="title" placeholder="Title">
+                    </div>
+                    <h4>Category</h4>
+                    <select id="category" class="form-select" aria-label="Default select example">
+                        <option value="Management">Management</option>
+                        <option value="Sales">Sales</option>
+                        <option value="HR">HR</option>
+                        <option value="IT">IT</option>
+                        <option value="Private">Private</option>
+                    </select>
+                    <h4>Description</h4>
+                    <textarea id="description" class="form-control" placeholder="Leave a comment here"
+                        aria-label="With textarea"></textarea>
+                    <div class="form-group col-md-11 option"></div>
+                </div>
+
+                <div id="right-form">
+                    <h4>Due Date</h4>
+                    <input type="date" class="form-control " id="date">
+
+                    <h4>Importance</h4>
+                    <select id="importance" class="form-select" aria-label="Default select example">
+                        <option value="High">High</option>
+                        <option value="Low">Low</option>
+                    </select>
+
+                    <h4>Assigned To</h4>
+                    <div id="assign">
+                        <div id="imgs">
+                            <svg onclick="chooseUser()" xmlns="http://www.w3.org/2000/svg" id="svg" width="30"
+                                height="30" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                            </svg>
+                        </div>
+                        <div id="buttons">
+                            <button type="button" onclick="cancle()" class="btn btn-light">Cancle</button>
+                            <button type="button" onclick="addTask(), clearInput()" class="btn btn-primary">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal" class=" modal-body">
+            <div id="modalcontent" class="d-none modal-content">
+                <button onclick="chooseUser()" id="button-modal" class="d-none btn btn-primary">close</button>
+            </div>
+        </div>
+    </main>
+
+
+</body>
+
+</html>

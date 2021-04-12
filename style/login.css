@@ -1,0 +1,70 @@
+body {
+  overflow: hidden;
+  width: 100vw;
+  margin: 0px;
+  height: 100%;
+  display: flex;
+  flex-direction: row; }
+  body header {
+    order: 1; }
+  body main {
+    position: relative;
+    margin: 0px 5% 0px 5%;
+    width: calc( 90vw - 150px );
+    height: calc( 100vh - 50px );
+    background: #ffffff;
+    order: 2; }
+
+#headline {
+  color: #190e4d;
+  margin-top: 50px; }
+
+.flex {
+  display: flex; }
+
+.fw {
+  flex-wrap: wrap; }
+
+main {
+  display: flex;
+  width: 100vw !important;
+  margin: 0px !important;
+  justify-content: center;
+  align-items: center;
+  background: #f4f3fb; }
+  main form {
+    background: #190e4d;
+    padding: 50px;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+    color: #fce5eb; }
+    main form button {
+      border: none !important;
+      margin: 10px; }
+      main form button:nth-of-type(1) {
+        background: #e12b70 !important; }
+        main form button:nth-of-type(1):hover {
+          filter: brightness(1.4); }
+      main form button:nth-of-type(2) {
+        background: #545454; }
+        main form button:nth-of-type(2):hover {
+          background: #545454;
+          filter: brightness(1.4); }
+    main form a {
+      color: #e12b70;
+      font-weight: 700;
+      font-size: 1.2rem;
+      text-decoration: none;
+      border-bottom: 1px solid #e12b70; }
+      main form a:hover {
+        color: #fce5eb;
+        border-bottom: 1px solid #fce5eb; }
+
+#alert {
+  position: absolute;
+  transform: translateY(700px);
+  transition: ease-in-out 225ms; }
+
+/*# sourceMappingURL=login.css.map */
