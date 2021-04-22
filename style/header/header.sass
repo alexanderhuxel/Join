@@ -1,5 +1,6 @@
 @import ../root.sass
 header
+    order: 1
     display: flex
     flex-direction: column
     justify-content: space-between
@@ -7,32 +8,140 @@ header
     height: 100vh
     align-items: center
     background: $background
+    position: relative
+    #menubutton
+        display: none
     #logo
         width: 50px
         height: 50px
-        margin: 20px 0px 0px 0px
+        margin: 20px auto 150px auto
+        &:hover
+            cursor: pointer
     nav
-        height: 50%
+        height: 100%
         justify-content: space-between
         display: flex
         flex-direction: column
         li
             margin: 10px 0px 10px 0px!important
+            &:nth-of-type(1)
+                order: 1
+            &:nth-of-type(2)
+                order: 2
+            &:nth-of-type(3)
+                order: 3
+            &:nth-of-type(4)
+                order: 4
+
         ul
-            text-align: center
-            list-style-type: none
             padding: 0px
-            img
+            flex-direction: column
+            align-items: start
+            display: flex
+            list-style-type: none
+
+            .img
+
+                order: 5!important
                 width: 30px
                 height: 30px
                 list-style: none
                 padding: 0px
                 border-radius: 50%
                 background: $passive
-                margin-bottom: 10px
+                margin: 10px auto 10px auto
             a
+                padding: 1px 0px 1px 0px
+                border-left: transparent 5px solid
+                padding-left: 10px
                 font-weight: 600!important
                 color: $font-light
                 text-decoration: none
                 &:hover
                     color: $font-dark
+.active
+    color: $active
+    border-left: 5px solid $active
+
+@media screen and ( max-width: 1200px )
+    .active-menu
+        #menubutton
+        span
+            &::before
+                width: 35px!important
+            &::after
+                width: 30px!important
+
+    header
+        z-index: 999
+        position: absolute
+        left: 0px
+        right: 0px
+        top: 0px
+        width: 100vw
+        height: 80px
+        overflow: hidden
+        #menubutton
+            all: unset
+            position: absolute
+            right: 25px
+            top: 5px
+            width: 40px
+            height: 40px
+            z-index: 999
+            &:hover
+                cursor: pointer
+
+            span
+                transform: rotate(180deg)
+                transition: ease-in-out 175ms
+                border-radius: 10px
+                position: absolute
+                top: 25px
+                left: 0px
+                width: 40px
+                height: 7px
+                background: $font-light
+                transform: rotate(180deg)
+                &::before
+                    transition: ease-in-out 175ms
+                    border-radius: 10px
+                    content: ""
+                    background: $font-light
+                    width: 40px
+                    height: 7px
+                    position: absolute
+                    top: -12px
+                    left: 0px
+                &::after
+                    transform: rotate(180deg)
+                    transition: ease-in-out 175ms
+                    content: ""
+                    border-radius: 10px
+                    background: $font-light
+                    width: 40px
+                    height: 7px
+                    top: 12px
+                    position: absolute
+                    left: 0px
+        #logo
+            position: absolute
+            left: 25px
+            top: -5px
+        nav
+            // justify-content: center
+            flex-direction: column
+            ul
+
+                display: flex
+
+                &:nth-of-type(1)
+                    padding-top: 80px!important
+                    flex-direction: column
+                    padding-top: 200px
+                    align-items: center
+                &:nth-of-type(2)
+                    flex-direction: column
+                    align-items: center
+                li
+                    font-size: 1rem

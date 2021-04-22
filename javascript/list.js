@@ -14,20 +14,17 @@ function loadList() {
         </div>
         `
         for (let x = 0; x < array[i].user.length; x++) {
-            document.getElementById(y).innerHTML += `<div class="user">
+            if (array[i].user[x].username == undefined) {
+            } else {
+                document.getElementById(y).innerHTML += `<div class="user">
             <img src="${array[i].user[x].img}">
             <div class="user-data">
             <p>${array[i].user[x].username}</p>
             <p>${array[i].user[x].email}</p>
             </div>
             </div>`
+            }
         }
         document.getElementById(i).style.borderColor = colorMap.get(array[i].category);
     }
-
-
 }
-
-
-
-

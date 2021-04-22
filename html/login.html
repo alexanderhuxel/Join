@@ -8,6 +8,7 @@
         <script src="../javascript/login.js"></script>
         <link rel="stylesheet" href="../style/login.css">
         <link rel="stylesheet" href="../style/root.css">
+        <script src="../javascript/main.js"></script>
         <link rel="stylesheet" href="../style/header/header.css">
         <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
         <link rel="shortcut icon" href="../img/logo.png" type="image/x-icon">
@@ -17,7 +18,7 @@
     </head>
 
 <body id="body">
-    <main id="main" style="height: 100vh!important; margin: 0px!important; background: #f4f3fb">
+    <main class="h100" id="main">
         <form id="login" class="form-signin">
             <img class="mb-4" src="../img/logo.png" alt="" width="72" height="72">
             <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
@@ -28,7 +29,7 @@
             </div>
             <button class="btn btn-lg btn-primary btn-block" type="button" onclick="login()">Login</button>
             <button class="btn btn-lg btn-primary btn-block" type="button" onclick="changeForm()">Sign up</button>
-            <a href="../html/matrix.html">Login as Guest</a>
+            <a onclick="loginAsGuest()" href="../html/matrix.html">Login as Guest</a>
 
         </form>
     </main>

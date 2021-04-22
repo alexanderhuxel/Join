@@ -1,18 +1,16 @@
 @import ../style/root.sass
 main
-    display: flex
-    flex-wrap: wrap
+    order: 2
     #matrix
         flex-wrap: wrap
         display: flex
-        width: 100%
+        width: 95%
+        margin: auto
         height: calc( 100% - 50px )
-        margin-top: 50px
         text-align: center
         .quarter
             width: 45%
             height: 400px
-            min-width: 400px
             margin: 10px auto 10px auto
             display: flex
             flex-direction: column
@@ -54,3 +52,14 @@ main
                         pointer-events: none!important
 #content
     display: none
+
+@media screen and ( max-width: 1200px  )
+    main
+        min-width: 100%
+    .quarter
+        min-width: 80vw!important
+    #matrix
+        width: 100%!important
+        padding-top: 100px
+        height: 90vh
+        overflow-y: auto!important

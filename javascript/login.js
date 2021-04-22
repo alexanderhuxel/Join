@@ -1,5 +1,4 @@
 let alert = false;
-let errormessage = ["E-mail or Password not matching", "All fields requiered"]
 Users = JSON.parse(localStorage.getItem('Users')) || [];
 
 
@@ -11,7 +10,23 @@ function login() {
     if (password == Users[0].password && email == Users[0].email) {
         window.location = "../html/matrix.html";
     } if (password != Users[0].password, email != Users[0].email) {
-        alertNoMatching(errormessage[0]);
+        alertFade(errormessage[0], 'danger');
+    }
+}
+
+function loginAsGuest() {
+    if (Users.length == 0) {
+
+        Users.push(createUser('Alex', 'alex@web.de', '1234', '../img/user.png'))
+        Users.push(createUser('Junus', 'Junus@web.de', '1234', '../img/busy.png'))
+        Users.push(createUser('Manuel', 'Manuel@web.de', '1234', '../img/userbusy.png'))
+        Users.push(createUser('Christa', 'Christa@web.de', '1234', '../img/woman.png'))
+        localStorage.setItem('Users', JSON.stringify(Users));
+        console.table(Users)
+
+    }
+    if (Users.length > 3) {
+
     }
 }
 
@@ -26,7 +41,7 @@ function signUp() {
         email = "";
         username = "";
         password = ""
-        alertNoMatching(errormessage[1]);
+        alertFade(errormessage[1], 'danger');
     } else {
         setTimeout(() => {
             window.location = "../html/login.html"
@@ -50,21 +65,6 @@ function changeForm() {
             `
 }
 
-function alertNoMatching(message) {
-
-    if (!alert) {
-        document.getElementById("main").innerHTML += `<div id="alert" style="text-align: center; font-size: 1.5rem"  class="alert alert-danger" role="alert">
-        ${message}
-        </div>`
-        alert = true;
-    }
-    setTimeout(() => {
-        document.getElementById("alert").style.transform = "translateY(350px)";
-    }, 10);
-    setTimeout(() => {
-        document.getElementById("alert").style.transform = "translateY(700px)";
-    }, 2000);
-}
 /**
  * by register an new user create an JSON object with the data
  * @param {string} name - name of the user 

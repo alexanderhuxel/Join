@@ -3,9 +3,17 @@
 allTasks = JSON.parse(localStorage.getItem('allTasks')) || [];
 selectedUser = JSON.parse(localStorage.getItem('selectedUser')) || [];
 Users = JSON.parse(localStorage.getItem('Users')) || [];
+let click = false;
+let alert = false;
 let show = false;
 let isfilled = false;
 selectedUser = [];
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0');
+var yyyy = today.getFullYear();
+today = yyyy + '-' + mm + '-' + dd;
+
 
 function addTask() {
     let description = document.getElementById("description").value;
@@ -15,18 +23,18 @@ function addTask() {
     let selectorcategory = document.getElementById("category").selectedIndex;
     let importance = document.getElementById("importance").options[selectorimportance].value;
     let category = document.getElementById("category").options[selectorcategory].value;
-    allTasks.push(createObj(title, date, category, description, importance, selectedUser))
-    localStorage.setItem('allTasks', JSON.stringify(allTasks));
-    localStorage.setItem('selectedUser', JSON.stringify(""));
-    console.table(allTasks)
-    alertAdded();
-    if (show) {
-        chooseUser();
-        x = document.getElementsByClassName("user");
-        for (let i = 0; i < x.length; i++) {
-            if (x[i].classList.contains("added")) {
-                x[i].classList.remove("added")
-            }
+    let destination = "";
+    if (title == "", date == "", description == "") {
+    } else {
+        allTasks.push(createObj(title, date, category, description, importance, selectedUser, destination))
+        localStorage.setItem('allTasks', JSON.stringify(allTasks));
+        localStorage.setItem('selectedUser', JSON.stringify(""));
+        selectedUser = [];
+        localStorage.setItem("selectedUser", JSON.stringify(selectedUser));
+        alertFade(errormessage[2], 'success');
+        if (show) {
+            chooseUser();
+            removeAddedUserClass();
         }
     }
 }
@@ -41,7 +49,8 @@ function addTask() {
  * @param {object} selectecUser - object with the userdata 
  * @returns 
  */
-function createObj(title, date, category, description, importance, selectedUser) {
+function createObj(title, date, category, description, importance, selectedUser, priority) {
+
     return {
         "title": title,
         "date": date,
@@ -49,8 +58,7 @@ function createObj(title, date, category, description, importance, selectedUser)
         "description": description,
         "importance": importance,
         "user": selectedUser,
-        "time": new Date().getDay()
-
+        "priority": priority
     }
 
 
@@ -63,48 +71,60 @@ function clearInput() {
     document.getElementById("date").value = "";
     document.getElementById("importance").value;
     document.getElementById("description").value = "";
+    selectedUser = [];
+    localStorage.setItem('selectedUser', JSON.stringify(""));
 }
-/**
- * generate an Alert from bootstrap after 2000ms change style 
- */
-function alertAdded() {
-    document.getElementById("main").innerHTML += `<div id="alert" style="text-align: center; font-size: 1.5rem"  class="alert alert-success" role="alert">
-    Your task has been saved
-  </div>
-    `
-    setTimeout(() => {
-        document.getElementById("alert").style.transform = "translateY(500px)"
-    }, 2000);
-}
+
 
 function chooseUser() {
     if (!isfilled) {
         for (let i = 0; i < Users.length; i++) {
-            document.getElementById("modalcontent").innerHTML += `
-            <div id="${i}" onclick="selectUser(${i})" ${Users[i].email} class="user">
-            <p class="name">${Users[i].username}</p>
+            document.getElementById("content").innerHTML += `
+            <div id="${i}" onclick="selectUser(${i})" class="user">
             <img src="${Users[i].img}">
-            </div>`
+            <div class="username">
+                ${Users[i].username}
+            </div>
+        </div>`
         }
         isfilled = true;
         chooseUser();
     } else if (isfilled && !show) {
-        document.getElementById("button-modal").classList.remove("d-none");
-        document.getElementById("modalcontent").classList.remove("d-none");
+        for (let i = 0; i < Users.length; i++) {
+            selectedUser.push('');
+        }
+        document.getElementById("modal").classList.remove("d-none");
+        document.getElementById("main").style.filter = "blur(4px)";
         show = true;
     } else if (isfilled && show) {
-        document.getElementById("button-modal").classList.add("d-none");
-        document.getElementById("modalcontent").classList.add("d-none");
+        document.getElementById("modal").classList.add("d-none");
+        document.getElementById("main").style.filter = "blur(0px)";
+        drawPickedUsers();
         show = false;
     }
 }
 
 
 function selectUser(i) {
-    document.getElementById(i).classList.add("added");
-    selectedUser.push(Users[i]);
-    localStorage.setItem('selectedUser', JSON.stringify(selectedUser));
+
+    if (selectedUser[i] == Users[i]) {
+        document.getElementById(i).classList.remove("added");
+        selectedUser.splice(i, 1, "");
+        localStorage.setItem('selectedUser', JSON.stringify(selectedUser));
+        console.table(selectedUser)
+        console.log(i);
+    } else {
+        if (i == i) {
+            document.getElementById(i).classList.add("added");
+            selectedUser.splice(i, 1, Users[i])
+            localStorage.setItem('selectedUser', JSON.stringify(selectedUser));
+            console.table(selectedUser, "1")
+            console.log(i)
+        }
+    }
 }
+
+
 
 
 function cancle() {
@@ -114,10 +134,26 @@ function cancle() {
     } if (!show) {
         clearInput();
     }
+
 }
 
-function checkDay() {
-    if (allTasks.time > 3) {
 
+function drawPickedUsers(i) {
+    for (let i = 0; i < selectedUser.length; i++) {
+        if (selectedUser[i] == "") {
+
+        }
+        else {
+            document.getElementById("imgs").innerHTML += `<img src="${selectedUser[i].img}">`
+        }
     }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("date").value = today;
+    document.getElementById("submit").addEventListener("click", () => {
+        document.getElementById("date").value = today;
+    })
+
+})
+

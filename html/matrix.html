@@ -13,29 +13,28 @@
     <title>Matrix</title>
 </head>
 
-<body onload="loadMatrix()" id="body">
+<body onload="fillAray()" id="body">
     <main>
         <div id="matrix">
-            <div ondrop="drop(event)" ondragover="allowDrop(event)" class="quarter">
+            <div ondrop="drop(event ,'do')" ondragover="allowDrop(event)" class="quarter">
                 <h6>DO</h6>
                 <div id="do" class="container"></div>
 
             </div>
-            <div ondrop="drop(event)" ondragover="allowDrop(event)" class="quarter">
+            <div ondrop="drop(event, 'schedule')" ondragover="allowDrop(event)" class="quarter">
                 <h6>SCHEDULE</h6>
                 <div id="schedule" class="container"></div>
             </div>
-            <div ondrop="drop(event)" ondragover="allowDrop(event)" class="quarter">
+            <div ondrop="drop(event, 'delegate')" ondragover="allowDrop(event)" class="quarter">
                 <h6>DELEGATE</h6>
                 <div id="delegate" class="container"></div>
             </div>
-            <div ondrop="drop(event)" ondragover="allowDrop(event)" class="quarter">
+            <div ondrop="drop(event,'eliminate')" ondragover="allowDrop(event)" class="quarter">
                 <h6>ELIMINATE</h6>
                 <div id="eliminate" class="container"></div>
             </div>
         </div>
     </main>
-    <div id="content"></div>
 
 
 

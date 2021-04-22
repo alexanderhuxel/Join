@@ -16,7 +16,7 @@
 
 <body id="body">
     <main id="main">
-        <div id="headline">
+        <div class="headline">
             <h1>Add Tasks</h1>
             <p>Learning Management System Project</p>
         </div>
@@ -43,7 +43,7 @@
 
                 <div id="right-form">
                     <h4>Due Date</h4>
-                    <input type="date" class="form-control " id="date">
+                    <input type="date" class="form-control" value="${today}" id="date">
 
                     <h4>Importance</h4>
                     <select id="importance" class="form-select" aria-label="Default select example">
@@ -63,19 +63,21 @@
                         </div>
                         <div id="buttons">
                             <button type="button" onclick="cancle()" class="btn btn-light">Cancle</button>
-                            <button type="button" onclick="addTask(), clearInput()" class="btn btn-primary">Add</button>
+                            <button type="button" id="submit" onclick="addTask(), clearInput()"
+                                class="btn btn-primary">Add</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div id="modal" class=" modal-body">
-            <div id="modalcontent" class="d-none modal-content">
-                <button onclick="chooseUser()" id="button-modal" class="d-none btn btn-primary">close</button>
-            </div>
-        </div>
     </main>
+    <div id="modal" class="d-none modal-dialog">
+        <div id="content" class="modal-content">
+        </div>
+        <button onclick="chooseUser()" id="button-modal" class=" btn btn-primary">close</button>
+    </div>
+    </div>
 
 
 </body>

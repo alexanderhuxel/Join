@@ -1,15 +1,18 @@
 @import ../style/root.sass
-
+body
+    position: relative
 #form
+    overflow-y: auto
     background: $container
-    width: 100%
+    width: 95%
+    margin: 100px auto 0px auto
     height: auto
     border-radius: 20px
     padding: 20px
     display: flex
     flex-direction: row
     #svg
-        z-index: 999
+        margin-right: 20px
         &:hover
             cursor: pointer
     #assign
@@ -43,6 +46,11 @@
         margin: 0px auto 0px auto
         display: flex
         flex-direction: column
+        button
+            margin: 0px 10px 0px 10px
+        #imgs
+            img
+                margin-right: 10px
     #left-form
         // border: solid 2px black
         margin: 0px auto 0px auto
@@ -50,52 +58,62 @@
         display: flex
         flex-direction: column
         min-width: 40%
-#alert
-    position: absolute
-    bottom: 10px
-    width: 100%
-    left: 0
-    right: 0
-    transition: ease-in-out 225ms
-    animation: fadein ease-in-out 225ms
-.modal-body
-    overflow: auto
-    width: 60%
-    left: 20%
-    position: relative
-    button
-        top: 80%
-        position: fixed
-        left: 51%
-        right: 51%
-    img
-        border-radius: 50%
-.user
+#modal
+    z-index: 99
     display: flex
-    flex-direction: row-reverse
-    height: 50px
-    width: 100%
-    &:hover
-        background: $container
-        cursor: pointer
-    p
-        width: 50%
-        margin: 0px
-        justify-content: center
-        align-items: center
-        font-weight: 600
-        color: $background
-        display: flex
-    img
-        width: 50px
-        height: 50px
-.d-none
-    display: none
-.added
-    background: rgba(40,500,10, .2)
-@keyframes fadein
-    0%
-        transform: translateY(500px)
+    background: $container
+    border-radius: 10px
+    position: absolute
+    max-width: 80vw
+    width: 70vw
+    height: 50vh
+    top: 25vh
+    bottom: 25vh
+    left: 15vw
+    right: 15vw
+    pointer-events: all!important
+    .modal-content
+        position: relative
+        margin: 20px
+        border-top-left-radius: 20px
+        border-bottom-left-radius: 20px
+        height: 90%
+        overflow-y: auto
+        &::before
+            content: "You can add up to 3 person per task"
+            text-align: center
+            font-size: 2rem
+            font-weight: 600
+        .user
+            margin: 5px 20px 5px 20px
+            padding: 10px
+            border-radius: 10px
+            display: flex
+            align-items: center
+            &:hover
+                background: $container
+                cursor: pointer
+            img
+                width: 70px
+                height: 70px
+                border-radius: 50%
+            .username
+                font-size: 1.3rem
+                margin-left: 50px
+    button
+        z-index: 999!important
+        width: 100px
+        position: absolute
+        left: 30vw
+        right: 30vw
+        bottom: -4vh
 
-    100%
-        transform: translateY(0px)
+.added
+    background-color: $active
+    color: $passive
+
+@media screen and ( max-width: 1200px )
+    button
+        margin: 0px 10px 0px 10px!important
+    .headline
+        margin-top: 100px

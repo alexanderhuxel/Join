@@ -1,31 +1,38 @@
 @import ../style/root.sass
 .list-labels
+    width: 95%
     display: flex
     color: $background
     font-weight: 700
     letter-spacing: .2rem
+    margin: 0px auto 0px auto
 
     p
         margin: 5px
         width: 33.33%
 #list
-    width: 100%
+    width: 95%
+    padding: 50px 10px 50px 10px
+    margin: 0px auto 0px auto
     border-radius: 20px
-    height: 80%
+    height: 70%
+    max-height: 70%
     overflow-y: auto
     background: $container
     .list-item
-        margin: 5px 0px 5px 0px
+        border: solid 1px black
+        margin: 0px 0px 15px 0px
         border-left: 5px solid red
         border-top-left-radius: 20px
         border-bottom-left-radius: 20px
         display: flex
-        flex-direction: row!important
+        flex-direction: row
         width: 100%
         height: auto
     .first
         padding-top: 10px
         width: 33.33%
+        min-width: 200px
         display: flex
         flex-direction: column
         .user
@@ -42,6 +49,7 @@
             height: 50px
     .second
         padding-top: 10px
+        min-width: 200px
         display: flex
         flex-direction: column
         width: 33.33%
@@ -51,9 +59,23 @@
 
     .third
         padding-top: 10px
+        min-width: 200px
         width: 33.33%
         display: flex
         flex-direction: column
         p
             font-weight: 700
             color: $background
+@media screen and ( max-width:  800px )
+    #list
+        height: 100%
+
+    .user
+        margin: 0px auto 0px auto!important
+    .list-labels
+        display: none
+@media screen and ( max-width: 600px )
+    .list-item
+        flex-wrap: wrap
+    p
+        margin-left: 20px

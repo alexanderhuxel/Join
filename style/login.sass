@@ -1,4 +1,7 @@
 @import ../style/root.sass
+body
+    header
+        display: none
 main
     display: flex
     width: 100vw!important
@@ -6,7 +9,10 @@ main
     justify-content: center
     align-items: center
     background: $container!important
+    text-align: start!important
+
     form
+        margin: 0px 2.5% 0px 2.5%
         background: $background
         padding: 50px
         border-top-left-radius: 15px
@@ -33,10 +39,11 @@ main
             font-size: 1.2rem
             text-decoration: none
             border-bottom: 1px solid $outside
+            word-break: keep-all
             &:hover
                 color: $font-light
                 border-bottom: 1px solid $font-light
 #alert
     position: absolute
-    transform: translateY(700px)
+    transform: translateY(120vh)
     transition: ease-in-out 225ms

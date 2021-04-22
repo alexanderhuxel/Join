@@ -1,16 +1,8 @@
-function loadMatrix() {
+allTasks = JSON.parse(localStorage.getItem('allTasks')) || [];
+function fillAray() {
     let array = JSON.parse(localStorage.getItem('allTasks')) || [];
     for (let i = 0, y = 100; i < array.length; i++, y++) {
-        if (array[i].importance == "High") {
-            container = "do";
-        } if (array[i].importance == "Low") {
-            container = "schedule";
-            if (array[i].importance == "Low" && array[i].time > 3) {
-                container = "delegate";
-            }
-        }
-        document.getElementById(container).innerHTML += `
-  
+        document.getElementById("do").innerHTML += `
      <div id="${i}" draggable="true" ondragstart="drag(event)" class="card">
          <div class="left">
              <div class="top-bar">
@@ -38,12 +30,23 @@ function loadMatrix() {
      </div>
  `
         for (let x = 0; x < array[i].user.length; x++) {
-            document.getElementById(y).innerHTML += `
-    <img src="${array[i].user[x].img}">
-    </div>`
+            if (array[i].user[x].img == undefined) {
+            } else {
+                document.getElementById(y).innerHTML += `
+            <img src="${array[i].user[x].img}">
+            </div>`
+            }
         }
         document.getElementById(i).style.borderColor = colorMap.get(array[i].category);
+        if (array[i].importance == "High") {
+            array[i].priority = 'do';
+        } if (array[i].importance == "Low") {
+            array[i].priority = 'schedule';
+        }
     }
+    fillContainer();
+    console.table(array)
+
 }
 
 function deleteListItem(i) {
@@ -59,3 +62,22 @@ function deleteListItem(i) {
 
 }
 
+function fillContainer() {
+    let firstCategory = allTasks.filter(filter => filter['priority'] == 'do');
+    let secondCategory = allTasks.filter(filter => filter['priority'] == 'schedule');
+    let thirdCategory = allTasks.filter(filter => filter['priority'] == 'delegate');
+    let fourthCategory = allTasks.filter(filter => filter['priority'] == 'eliminate');
+    console.log(firstCategory);
+    console.log(secondCategory)
+    document.getElementById("do").innerHTML += firstCategory;
+    document.getElementById("schedule").innerHTML += secondCategory;
+    document.getElementById("delegate").innerHTML += thirdCategory;
+    document.getElementById("eliminate").innerHTML += fourthCategory;
+}
+
+function clearContainer() {
+    document.getElementById("do").innerHTML = "";
+    document.getElementById("schedule").innerHTML = "";
+    document.getElementById("delegate").innerHTML = "";
+    document.getElementById("eliminate").innerHTML = "";
+}
