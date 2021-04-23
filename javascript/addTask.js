@@ -25,13 +25,14 @@ function addTask() {
     let category = document.getElementById("category").options[selectorcategory].value;
     let destination = "";
     if (title == "", date == "", description == "") {
+        alertFade(errormessage[1], 'danger', 'translateY(70vh)');
     } else {
         allTasks.push(createObj(title, date, category, description, importance, selectedUser, destination))
         localStorage.setItem('allTasks', JSON.stringify(allTasks));
         localStorage.setItem('selectedUser', JSON.stringify(""));
         selectedUser = [];
         localStorage.setItem("selectedUser", JSON.stringify(selectedUser));
-        alertFade(errormessage[2], 'success');
+        alertFade(errormessage[2], 'success', 'translateY(70vh)');
         if (show) {
             chooseUser();
             removeAddedUserClass();
@@ -51,6 +52,9 @@ function addTask() {
  */
 function createObj(title, date, category, description, importance, selectedUser, priority) {
 
+    if (importance == "High") {
+        priority = "do";
+    } else { priority = "schedule" }
     return {
         "title": title,
         "date": date,

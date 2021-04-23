@@ -15,12 +15,19 @@ body
     position: relative
     flex-direction: row
     main
+        align-items: center
         order: 2
         width: 100%
         height: 100%
         display: flex
         flex-direction: column
+        #alert
+            margin: 0px auto 0px auto
+            position: absolute
+            transform: translateY(120vh)
+            transition: ease-in-out 225ms
         .headline
+            width: 80vw
             h1,p
                 margin-left: 5%!important
             h1
