@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <script src="../javascript/main.js"></script>
     <script src="../javascript/addTask.js"></script>
+    <script src="../javascript/mini_backend.js"></script>
     <link rel="stylesheet" href="../style/root.css">
     <link rel="stylesheet" href="../style/addTask.css">
     <link rel="stylesheet" href="../style/header/header.css">
@@ -14,7 +15,7 @@
     <title>AddTask</title>
 </head>
 
-<body id="body">
+<body onload="init()" id="body">
     <main id="main">
         <div class="headline">
             <h1>Add Tasks</h1>
@@ -60,6 +61,7 @@
                                 <path
                                     d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
                             </svg>
+                            <div id="userimg"></div>
                         </div>
                         <div id="buttons">
                             <button type="button" onclick="cancle()" class="btn btn-light">Cancle</button>

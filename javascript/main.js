@@ -4,9 +4,36 @@ let isload = true;
 let errormessage = ["E-mail or Password not matching", "All fields requiered", "Your tasks has been created"]
 let colorMap;
 let currentDraggedElement;
+
+
+
+async function init() {
+    await downloadFromServer();
+    // Users = JSON.parse(backend.getItem('Users')) || [];
+    // allTasks = JSON.parse(backend.getItem('allTasks')) || [];
+    // selectedUser = JSON.parse(backend.getItem('selectedUser')) || [];
+    backend.setItem("allTasks", allTasks);
+    let aaaa = backend.getItem("allTasks");
+    console.log(aaaa[0]['title']);
+    aaaa[0]['title'] = "test";
+    backend.setItem("allTasks", allTasks);
+    console.log(aaaa)
+    backend.setItem("set", "1213213");
+    console.log(backend.getItem("set"))
+    if (window.location.href.indexOf('list') > -1) {
+        loadList();
+        console.log("list")
+    } if (window.location.href.indexOf('matrix') > -1) {
+        fillArray();
+        console.log("array")
+    }
+}
+
+
 /**
  * generating the HTML for the header 
  */
+
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -101,7 +128,7 @@ function getData() {
         Users.push(createUser('Junus', 'Junus@web.de', '1234', '../img/busy.png'))
         Users.push(createUser('Manuel', 'Manuel@web.de', '1234', '../img/userbusy.png'))
         Users.push(createUser('Christa', 'Christa@web.de', '1234', '../img/woman.png'))
-        localStorage.setItem('Users', JSON.stringify(Users));
+        backend.setItem('Users', JSON.stringify(Users));
     }
     if (Users.length > 3) {
     }

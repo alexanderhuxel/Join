@@ -7,6 +7,7 @@ let click = false;
 let alert = false;
 let show = false;
 let isfilled = false;
+let status = false;
 selectedUser = [];
 var today = new Date();
 var dd = String(today.getDate()).padStart(2, '0');
@@ -36,9 +37,9 @@ function addTask() {
     localStorage.setItem("selectedUser", JSON.stringify(selectedUser));
     alertFade(errormessage[2], 'success', 'translateY(70vh)');
     clearInput();
-    removeAddedUserClass();
     if (show) {
         chooseUser();
+        removeAddedUserClass();
     }
 
 }
@@ -103,19 +104,24 @@ function chooseUser() {
         }
         isfilled = true;
         chooseUser();
-    } else if (isfilled && !show) {
-        for (let i = 0; i < Users.length; i++) {
-            selectedUser.push('');
+        if (!status) {
+            status = true;
+            for (let i = 0; i < Users.length; i++) {
+                selectedUser.push('');
+            }
         }
+    } else if (isfilled && !show) {
         document.getElementById("modal").classList.remove("d-none");
         document.getElementById("main").style.filter = "blur(4px)";
         show = true;
+        drawPickedUsers();
     } else if (isfilled && show) {
         document.getElementById("modal").classList.add("d-none");
         document.getElementById("main").style.filter = "blur(0px)";
         drawPickedUsers();
         show = false;
     }
+
 }
 
 
@@ -125,12 +131,14 @@ function selectUser(i) {
         document.getElementById(i).classList.remove("added");
         selectedUser.splice(i, 1, "");
         localStorage.setItem('selectedUser', JSON.stringify(selectedUser));
+        document.getElementById("userimg").innerHTML = "";
 
     } else {
         if (i == i) {
             document.getElementById(i).classList.add("added");
             selectedUser.splice(i, 1, Users[i])
             localStorage.setItem('selectedUser', JSON.stringify(selectedUser));
+
         }
     }
 }
@@ -144,14 +152,16 @@ function cancle() {
 }
 
 
-function drawPickedUsers(i) {
+function drawPickedUsers() {
     for (let i = 0; i < selectedUser.length; i++) {
-        if (selectedUser[i] == "") {
+        if (selectedUser[i] == Users[i]) {
+            document.getElementById("userimg").innerHTML += `<img src="${selectedUser[i].img}">`
         }
-        else {
-            document.getElementById("imgs").innerHTML += `<img src="${selectedUser[i].img}">`
+        else if (selectedUser[i] == Users[i]) {
+            document.getElementById("userimg").innerHTML = "";
         }
     }
+
 }
 
 
@@ -161,3 +171,4 @@ function removeAddedUserClass() {
         document.getElementById(i).classList.remove("added");
     }
 }
+
