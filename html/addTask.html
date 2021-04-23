@@ -20,12 +20,12 @@
             <h1>Add Tasks</h1>
             <p>Learning Management System Project</p>
         </div>
-        <div id="form">
+        <form onsubmit="addTask()">
             <div id="ticketcreator">
                 <div id="left-form">
                     <div class="mb-3">
                         <h4>Title</h4>
-                        <input type="text" class="form-control" id="title" placeholder="Title">
+                        <input required type="text" class="form-control" id="title" placeholder="Title">
                     </div>
                     <h4>Category</h4>
                     <select id="category" class="form-select" aria-label="Default select example">
@@ -36,7 +36,7 @@
                         <option value="Private">Private</option>
                     </select>
                     <h4>Description</h4>
-                    <textarea id="description" class="form-control" placeholder="Leave a comment here"
+                    <textarea required id="description" class="form-control" placeholder="Leave a comment here"
                         aria-label="With textarea"></textarea>
                     <div class="form-group col-md-11 option"></div>
                 </div>
@@ -63,13 +63,13 @@
                         </div>
                         <div id="buttons">
                             <button type="button" onclick="cancle()" class="btn btn-light">Cancle</button>
-                            <button type="button" id="submit" onclick="addTask(), clearInput()"
-                                class="btn btn-primary">Add</button>
+                            <button type="submit" onsubmit="addTask()" class="btn btn-primary">Add</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
+
 
     </main>
     <div id="modal" class="d-none modal-dialog">

@@ -14,8 +14,13 @@ var mm = String(today.getMonth() + 1).padStart(2, '0');
 var yyyy = today.getFullYear();
 today = yyyy + '-' + mm + '-' + dd;
 
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("date").value = today;
+})
+
 
 function addTask() {
+    console.log("test")
     let description = document.getElementById("description").value;
     let title = document.getElementById("title").value;
     let date = document.getElementById("date").value;
@@ -24,20 +29,18 @@ function addTask() {
     let importance = document.getElementById("importance").options[selectorimportance].value;
     let category = document.getElementById("category").options[selectorcategory].value;
     let destination = "";
-    if (title == "", date == "", description == "") {
-        alertFade(errormessage[1], 'danger', 'translateY(70vh)');
-    } else {
-        allTasks.push(createObj(title, date, category, description, importance, selectedUser, destination))
-        localStorage.setItem('allTasks', JSON.stringify(allTasks));
-        localStorage.setItem('selectedUser', JSON.stringify(""));
-        selectedUser = [];
-        localStorage.setItem("selectedUser", JSON.stringify(selectedUser));
-        alertFade(errormessage[2], 'success', 'translateY(70vh)');
-        if (show) {
-            chooseUser();
-            removeAddedUserClass();
-        }
+    allTasks.push(createObj(title, date, category, description, importance, selectedUser, destination))
+    localStorage.setItem('allTasks', JSON.stringify(allTasks));
+    localStorage.setItem('selectedUser', JSON.stringify(""));
+    selectedUser = [];
+    localStorage.setItem("selectedUser", JSON.stringify(selectedUser));
+    alertFade(errormessage[2], 'success', 'translateY(70vh)');
+    clearInput();
+    removeAddedUserClass();
+    if (show) {
+        chooseUser();
     }
+
 }
 
 /**
@@ -71,12 +74,19 @@ function createObj(title, date, category, description, importance, selectedUser,
  * clearing the inputfields
  */
 function clearInput() {
+    console.log("clear")
     document.getElementById("title").value = "";
-    document.getElementById("date").value = "";
     document.getElementById("importance").value;
+    document.getElementById("date").value = today;
     document.getElementById("description").value = "";
     selectedUser = [];
     localStorage.setItem('selectedUser', JSON.stringify(""));
+    document.getElementById("imgs").innerHTML = ` <svg onclick="chooseUser()" xmlns="http://www.w3.org/2000/svg" id="svg" width="30"
+    height="30" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+    <path
+        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+</svg>`;
 }
 
 
@@ -115,15 +125,12 @@ function selectUser(i) {
         document.getElementById(i).classList.remove("added");
         selectedUser.splice(i, 1, "");
         localStorage.setItem('selectedUser', JSON.stringify(selectedUser));
-        console.table(selectedUser)
-        console.log(i);
+
     } else {
         if (i == i) {
             document.getElementById(i).classList.add("added");
             selectedUser.splice(i, 1, Users[i])
             localStorage.setItem('selectedUser', JSON.stringify(selectedUser));
-            console.table(selectedUser, "1")
-            console.log(i)
         }
     }
 }
@@ -132,20 +139,14 @@ function selectUser(i) {
 
 
 function cancle() {
-    if (show && isfilled) {
-        chooseUser();
-        clearInput();
-    } if (!show) {
-        clearInput();
-    }
-
+    removeAddedUserClass();
+    clearInput();
 }
 
 
 function drawPickedUsers(i) {
     for (let i = 0; i < selectedUser.length; i++) {
         if (selectedUser[i] == "") {
-
         }
         else {
             document.getElementById("imgs").innerHTML += `<img src="${selectedUser[i].img}">`
@@ -153,11 +154,10 @@ function drawPickedUsers(i) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("date").value = today;
-    document.getElementById("submit").addEventListener("click", () => {
-        document.getElementById("date").value = today;
-    })
 
-})
 
+function removeAddedUserClass() {
+    for (let i = 0; i < Users.length; i++) {
+        document.getElementById(i).classList.remove("added");
+    }
+}

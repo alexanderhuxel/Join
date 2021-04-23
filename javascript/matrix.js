@@ -44,11 +44,11 @@ function fillArray() {
 function deleteListItem(i) {
     allTasks.splice(i, 1);
     localStorage.setItem('allTasks', JSON.stringify(allTasks));
-    if (window.location.href.indexOf('list')) {
+    if (window.location.href.indexOf('list') > -1) {
         document.getElementById("list").innerHTML = "";
         loadList();
     }
-    if (window.location.href.indexOf('matrix')) {
+    if (window.location.href.indexOf('matrix') > -1) {
         clearContainer();
         fillArray();
     }

@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
         <li><a class="link" href="../html/addTask.html">AddTask</a></li>
         </ul>
         <ul>
-        <img class="img" src="../img/user.png" id="user">
         <li><a class="link" href="../html/help.html">Help</a></li>
         <li><a class="link" href="../html/imprint.html">Impressum</a></li>
         <li><a class="link" href="../html/dataprotection.html">Datenschutz</a></li>
