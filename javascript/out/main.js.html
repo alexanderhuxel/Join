@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: main.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: main.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * all Variables of the currentpage
  * @param {boolean} open - the status if the responsivemenu is current opend
  * @param {array} errormessage - the errormessages for the alertFade function
@@ -18,10 +46,7 @@ async function init() {
     Users = backend.getItem('Users');
     allTasks = backend.getItem('allTasks');
     selectedUser = backend.getItem('selctedUser');
-    if (window.location.href.indexOf('index') > -1) {
-        getData();
-        console.log("index")
-    } if (window.location.href.indexOf('list') > -1) {
+    if (window.location.href.indexOf('list') > -1) {
         loadList();
         console.log("list")
     } if (window.location.href.indexOf('matrix') > -1) {
@@ -35,29 +60,27 @@ async function init() {
  * generating the HTML for the header 
  */
 document.addEventListener("DOMContentLoaded", () => {
-    if(window.location.href.indexOf('index')> -1){}
-    else{
-        document.getElementById("body").innerHTML += `<header id="header"> 
-        <nav id="nav">
-        <button id="menubutton"> <span > </span> </button>
-        <ul>
-        <img src="../img/logo.png" id="logo">
-        <li><a class="link" href="../html/matrix.html">Matrix</a></li>
-        <li><a  class="link" href="../html/list.html">List</a></li>
-        <li><a class="link" href="../html/addTask.html">AddTask</a></li>
-        </ul>
-        <ul>
-        <li><a class="link" href="../html/help.html">Help</a></li>
-        <li><a class="link" href="../html/imprint.html">Impressum</a></li>
-        <li><a class="link" href="../html/dataprotection.html">Datenschutz</a></li>
-        <li><a class="link" href="../html/index.html">Log Out</a></li>
-        </ul>
-        </nav>
+
+    document.getElementById("body").innerHTML += `&lt;header id="header"> 
+        &lt;nav id="nav">
+        &lt;button id="menubutton"> &lt;span > &lt;/span> &lt;/button>
+        &lt;ul>
+        &lt;img src="../img/logo.png" id="logo">
+        &lt;li>&lt;a class="link" href="../html/matrix.html">Matrix&lt;/a>&lt;/li>
+        &lt;li>&lt;a  class="link" href="../html/list.html">List&lt;/a>&lt;/li>
+        &lt;li>&lt;a class="link" href="../html/addTask.html">AddTask&lt;/a>&lt;/li>
+        &lt;/ul>
+        &lt;ul>
+        &lt;li>&lt;a class="link" href="../html/help.html">Help&lt;/a>&lt;/li>
+        &lt;li>&lt;a class="link" href="../html/imprint.html">Impressum&lt;/a>&lt;/li>
+        &lt;li>&lt;a class="link" href="../html/dataprotection.html">Datenschutz&lt;/a>&lt;/li>
+        &lt;li>&lt;a class="link" href="../html/index.html">Log Out&lt;/a>&lt;/li>
+        &lt;/ul>
+        &lt;/nav>
         
-        </header>`
+        &lt;/header>`
         console.log("Hey, nice to see you! Enjoy my code 😊❤")
-        document.getElementById("menubutton").addEventListener("click", openResponsiveMenu);
-    }
+    document.getElementById("menubutton").addEventListener("click", openResponsiveMenu);
 });
 
 
@@ -71,9 +94,9 @@ document.addEventListener("DOMContentLoaded", () => {
 function alertFade(message, color, position) {
 
     if (!alert) {
-        document.getElementById("main").innerHTML += `<div id="alert" style="text-align: center; font-size: 1.5rem"  class="alert alert-${color}" role="alert">
+        document.getElementById("main").innerHTML += `&lt;div id="alert" style="text-align: center; font-size: 1.5rem"  class="alert alert-${color}" role="alert">
         ${message}
-        </div>`
+        &lt;/div>`
         alert = true;
     }
     setTimeout(() => {
@@ -112,7 +135,7 @@ function drop(ev) {
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
     allTasks[currentDraggedElement].priority = ev.target.id;
-    backend.setItem("allTasks", allTasks);
+    localStorage.setItem('allTasks', JSON.stringify(allTasks));
     clearContainer();
     fillArray();
 }
@@ -136,12 +159,36 @@ function openResponsiveMenu() {
 
 
 function getData() {
-    console.log(backend.getItem("Users"))
-    Users.push(createUser('Alex', 'alex@web.de', '1234', '../img/user.png'))
-    Users.push(createUser('Junus', 'Junus@web.de', '1234', '../img/busy.png'))
-    Users.push(createUser('Manuel', 'Manuel@web.de', '1234', '../img/userbusy.png'))
-    Users.push(createUser('Christa', 'Christa@web.de', '1234', '../img/woman.png'))
-    backend.setItem('Users', Users);
-    console.log(backend.getItem("Users"))
+    if (backend.getItem('Users') == null) {
+        Users.push(createUser('Alex', 'alex@web.de', '1234', '../img/user.png'))
+        Users.push(createUser('Junus', 'Junus@web.de', '1234', '../img/busy.png'))
+        Users.push(createUser('Manuel', 'Manuel@web.de', '1234', '../img/userbusy.png'))
+        Users.push(createUser('Christa', 'Christa@web.de', '1234', '../img/woman.png'))
+        backend.setItem('Users', Users);
+
+    }
+
     window.location.href = "../html/login.html";
-}
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#alertFade">alertFade</a></li><li><a href="global.html#colorMap">colorMap</a></li><li><a href="global.html#open">open</a></li><li><a href="global.html#openResponsiveMenu">openResponsiveMenu</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 24 2021 09:49:24 GMT-0400 (Paraguayanische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

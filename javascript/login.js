@@ -1,5 +1,5 @@
 let alert = false;
-Users = JSON.parse(localStorage.getItem('Users')) || [];
+Users = backend.getItem('Users');
 
 
 

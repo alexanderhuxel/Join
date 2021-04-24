@@ -1,6 +1,6 @@
 allTasks = JSON.parse(localStorage.getItem('allTasks')) || [];
 function fillArray() {
-    let array = JSON.parse(localStorage.getItem('allTasks')) || [];
+    let array = backend.getItem("allTasks");
     for (let i = 0, y = 100; i < array.length; i++, y++) {
         document.getElementById(array[i].priority).innerHTML += `
      <div id="${i}" draggable="true" ondragstart="drag(event,${i})" class="card">
@@ -28,13 +28,18 @@ function fillArray() {
 
          </div>
      </div>
- `
-        for (let x = 0; x < array[i].user.length; x++) {
-            if (array[i].user[x].img == undefined) {
-            } else {
-                document.getElementById(y).innerHTML += `
-            <img src="${array[i].user[x].img}">
-            </div>`
+ `  
+        if (array[i].user.length == 0) {
+            console.log("User.legth == 0")
+        }
+        else{
+            for (let x = 0; x < array[i].user.length; x++) {
+                if (array[i].user[x].img == undefined) {
+                } else {
+                    document.getElementById(y).innerHTML += `
+                    <img src="${array[i].user[x].img}">
+                    </div>`
+                }
             }
         }
         document.getElementById(i).style.borderColor = colorMap.get(array[i].category);

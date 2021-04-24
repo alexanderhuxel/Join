@@ -1,8 +1,8 @@
 
 
-allTasks = JSON.parse(localStorage.getItem('allTasks')) || [];
-selectedUser = JSON.parse(localStorage.getItem('selectedUser')) || [];
-Users = JSON.parse(localStorage.getItem('Users')) || [];
+// allTasks = JSON.parse(localStorage.getItem('allTasks')) || [];
+// selectedUser = JSON.parse(localStorage.getItem('selectedUser')) || [];
+// Users = JSON.parse(localStorage.getItem('Users')) || [];
 let click = false;
 let alert = false;
 let show = false;
@@ -29,14 +29,13 @@ function addTask() {
     let selectorcategory = document.getElementById("category").selectedIndex;
     let importance = document.getElementById("importance").options[selectorimportance].value;
     let category = document.getElementById("category").options[selectorcategory].value;
-    let destination = "";
-    allTasks.push(createObj(title, date, category, description, importance, selectedUser, destination))
-    localStorage.setItem('allTasks', JSON.stringify(allTasks));
-    localStorage.setItem('selectedUser', JSON.stringify(""));
-    selectedUser = [];
-    localStorage.setItem("selectedUser", JSON.stringify(selectedUser));
+    allTasks.push(createObj(title, date, category, description, importance, selectedUser))
+    backend.setItem('allTasks', allTasks);
+    backend.setItem('selectedUser', "");
+    backend.setItem('selectedUser',selectUser)
     alertFade(errormessage[2], 'success', 'translateY(70vh)');
     clearInput();
+    console.log(backend.getItem('allTasks'))
     if (show) {
         chooseUser();
         removeAddedUserClass();
@@ -81,7 +80,7 @@ function clearInput() {
     document.getElementById("date").value = today;
     document.getElementById("description").value = "";
     selectedUser = [];
-    localStorage.setItem('selectedUser', JSON.stringify(""));
+    backend.setItem('selectedUser',"");
     document.getElementById("imgs").innerHTML = ` <svg onclick="chooseUser()" xmlns="http://www.w3.org/2000/svg" id="svg" width="30"
     height="30" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
@@ -92,6 +91,7 @@ function clearInput() {
 
 
 function chooseUser() {
+    Users;
     if (!isfilled) {
         for (let i = 0; i < Users.length; i++) {
             document.getElementById("content").innerHTML += `
@@ -130,14 +130,14 @@ function selectUser(i) {
     if (selectedUser[i] == Users[i]) {
         document.getElementById(i).classList.remove("added");
         selectedUser.splice(i, 1, "");
-        localStorage.setItem('selectedUser', JSON.stringify(selectedUser));
+        backend.setItem('selectedUser',selectUser);
         document.getElementById("userimg").innerHTML = "";
 
     } else {
         if (i == i) {
             document.getElementById(i).classList.add("added");
             selectedUser.splice(i, 1, Users[i])
-            localStorage.setItem('selectedUser', JSON.stringify(selectedUser));
+            backend.setItem('selectedUser', selectUser);
 
         }
     }
