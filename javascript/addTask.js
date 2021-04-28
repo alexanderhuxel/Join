@@ -1,5 +1,3 @@
-
-
 // allTasks = JSON.parse(localStorage.getItem('allTasks')) || [];
 // selectedUser = JSON.parse(localStorage.getItem('selectedUser')) || [];
 // Users = JSON.parse(localStorage.getItem('Users')) || [];
@@ -8,6 +6,7 @@ let alert = false;
 let show = false;
 let isfilled = false;
 let status = false;
+let usersetting = false;
 selectedUser = [];
 var today = new Date();
 var dd = String(today.getDate()).padStart(2, '0');
@@ -15,9 +14,6 @@ var mm = String(today.getMonth() + 1).padStart(2, '0');
 var yyyy = today.getFullYear();
 today = yyyy + '-' + mm + '-' + dd;
 
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("date").value = today;
-})
 
 
 function addTask() {
@@ -30,28 +26,25 @@ function addTask() {
     let importance = document.getElementById("importance").options[selectorimportance].value;
     let category = document.getElementById("category").options[selectorcategory].value;
     allTasks.push(createObj(title, date, category, description, importance, selectedUser))
-    backend.setItem('allTasks', allTasks);
-    backend.setItem('selectedUser', "");
-    backend.setItem('selectedUser',selectUser)
+    backend.setItem('allTasks', JSON.stringify(allTasks));
+    backend.setItem('selectedUser', JSON.stringify(""));
+    backend.setItem('selectedUser', JSON.stringify(selectedUser));
     alertFade(errormessage[2], 'success', 'translateY(70vh)');
     clearInput();
-    console.log(backend.getItem('allTasks'))
-    if (show) {
-        chooseUser();
+    if (selectedUser.length > 0) {
         removeAddedUserClass();
     }
-
+    console.log(backend.getItem('allTasks'));
 }
 
 /**
- * generates a new object 
  * @param {string} title -title of the Task
  * @param {number} date  -date of the Task
  * @param {string} description  - description of the Task
  * @param {string} importance - importance of the Task
  * @param {string} category - category of the Task
  * @param {object} selectecUser - object with the userdata 
- * @returns 
+ * generates a new object 
  */
 function createObj(title, date, category, description, importance, selectedUser, priority) {
 
@@ -80,7 +73,7 @@ function clearInput() {
     document.getElementById("date").value = today;
     document.getElementById("description").value = "";
     selectedUser = [];
-    backend.setItem('selectedUser',"");
+    backend.setItem('selectedUser', "");
     document.getElementById("imgs").innerHTML = ` <svg onclick="chooseUser()" xmlns="http://www.w3.org/2000/svg" id="svg" width="30"
     height="30" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
@@ -91,7 +84,7 @@ function clearInput() {
 
 
 function chooseUser() {
-    Users;
+    Users = JSON.parse(backend.getItem("Users"));
     if (!isfilled) {
         for (let i = 0; i < Users.length; i++) {
             document.getElementById("content").innerHTML += `
@@ -106,18 +99,22 @@ function chooseUser() {
         chooseUser();
         if (!status) {
             status = true;
-            for (let i = 0; i < Users.length; i++) {
-                selectedUser.push('');
+            if (!usersetting) {
+                for (let i = 0; i < Users.length; i++) {
+                    selectedUser.push('');
+                } usersetting = true;
             }
         }
     } else if (isfilled && !show) {
         document.getElementById("modal").classList.remove("d-none");
-        document.getElementById("main").style.filter = "blur(4px)";
+        document.getElementById("main").style.filter = "blur(8px)";
         show = true;
+        clearDrawedUsers();
         drawPickedUsers();
     } else if (isfilled && show) {
         document.getElementById("modal").classList.add("d-none");
         document.getElementById("main").style.filter = "blur(0px)";
+        clearDrawedUsers();
         drawPickedUsers();
         show = false;
     }
@@ -127,18 +124,16 @@ function chooseUser() {
 
 function selectUser(i) {
 
-    if (selectedUser[i] == Users[i]) {
+    if (document.getElementById(i).classList.contains('added')) {
         document.getElementById(i).classList.remove("added");
         selectedUser.splice(i, 1, "");
-        backend.setItem('selectedUser',selectUser);
+        backend.setItem('selectedUser', selectUser);
         document.getElementById("userimg").innerHTML = "";
-
     } else {
-        if (i == i) {
+        if (i == i && document.getElementById(i).classList.contains('user')) {
             document.getElementById(i).classList.add("added");
             selectedUser.splice(i, 1, Users[i])
             backend.setItem('selectedUser', selectUser);
-
         }
     }
 }
@@ -154,17 +149,16 @@ function cancle() {
 
 function drawPickedUsers() {
     for (let i = 0; i < selectedUser.length; i++) {
-        if (selectedUser[i] == Users[i]) {
+        if (selectedUser[i] == "") {
+        } else {
             document.getElementById("userimg").innerHTML += `<img src="${selectedUser[i].img}">`
         }
-        else if (selectedUser[i] == Users[i]) {
-            document.getElementById("userimg").innerHTML = "";
-        }
     }
-
 }
 
-
+function clearDrawedUsers() {
+    document.getElementById("userimg").innerHTML = "";
+}
 
 function removeAddedUserClass() {
     for (let i = 0; i < Users.length; i++) {

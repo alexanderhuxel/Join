@@ -26,34 +26,30 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>allTasks = JSON.parse(localStorage.getItem('allTasks')) || [];
-selectedUser = JSON.parse(localStorage.getItem('selectedUser')) || [];
+            <pre class="prettyprint source linenums"><code>
+
+// allTasks = JSON.parse(localStorage.getItem('allTasks')) || [];
+// selectedUser = JSON.parse(localStorage.getItem('selectedUser')) || [];
+// Users = JSON.parse(localStorage.getItem('Users')) || [];
+let click = false;
+let alert = false;
 let show = false;
+let isfilled = false;
+let status = false;
 selectedUser = [];
-const Users = [
-    {
-        "name": "Alex",
-        "img": "../img/busy.png",
-        "email": "alex@web.de"
-    },
-    {
-        "name": "Christian",
-        "img": "../img/user.png",
-        "email": "christian@web.de"
-    },
-    {
-        "name": "Junus",
-        "img": "../img/userbusy.png",
-        "email": "junus.web.de"
-    },
-    {
-        "name": "Christa",
-        "img": "../img/woman.png",
-        "email": "christa@web.de"
-    }];
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0');
+var yyyy = today.getFullYear();
+today = yyyy + '-' + mm + '-' + dd;
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("date").value = today;
+})
+
 
 function addTask() {
-    selectedUser = JSON.parse(localStorage.getItem('selectedUser')) || [];
+    console.log("test")
     let description = document.getElementById("description").value;
     let title = document.getElementById("title").value;
     let date = document.getElementById("date").value;
@@ -61,31 +57,42 @@ function addTask() {
     let selectorcategory = document.getElementById("category").selectedIndex;
     let importance = document.getElementById("importance").options[selectorimportance].value;
     let category = document.getElementById("category").options[selectorcategory].value;
-    allTasks.push(createObj(title, date, category, description, importance))
-    localStorage.setItem('allTasks', JSON.stringify(allTasks));
+    allTasks.push(createObj(title, date, category, description, importance, selectedUser))
+    backend.setItem('allTasks', allTasks);
+    backend.setItem('selectedUser', "");
+    backend.setItem('selectedUser', selectUser)
+    alertFade(errormessage[2], 'success', 'translateY(70vh)');
     clearInput();
-    localStorage.setItem('selectedUser', JSON.stringify(""));
+    console.log(backend.getItem('allTasks'))
+    if (show) {
+        chooseUser();
+        removeAddedUserClass();
+    }
+
 }
 
 /**
- * generates a new object 
  * @param {string} title -title of the Task
  * @param {number} date  -date of the Task
  * @param {string} description  - description of the Task
  * @param {string} importance - importance of the Task
  * @param {string} category - category of the Task
- * @param {object} selectecUser - object with the data 
- * @returns 
+ * @param {object} selectecUser - object with the userdata 
+ * generates a new object 
  */
-function createObj(title, date, category, description, importance, user) {
+function createObj(title, date, category, description, importance, selectedUser, priority) {
+
+    if (importance == "High") {
+        priority = "do";
+    } else { priority = "schedule" }
     return {
         "title": title,
         "date": date,
+        "category": category,
         "description": description,
         "importance": importance,
-        "category": category,
-        "user": selectedUser
-
+        "user": selectedUser,
+        "priority": priority
     }
 
 
@@ -94,64 +101,105 @@ function createObj(title, date, category, description, importance, user) {
  * clearing the inputfields
  */
 function clearInput() {
+    console.log("clear")
     document.getElementById("title").value = "";
-    document.getElementById("date").value = "";
     document.getElementById("importance").value;
+    document.getElementById("date").value = today;
     document.getElementById("description").value = "";
+    selectedUser = [];
+    backend.setItem('selectedUser', "");
+    document.getElementById("imgs").innerHTML = ` &lt;svg onclick="chooseUser()" xmlns="http://www.w3.org/2000/svg" id="svg" width="30"
+    height="30" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+    &lt;path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+    &lt;path
+        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+&lt;/svg>`;
 }
-/**
- * generate an Alert from bootstrap after 2000ms change style 
- */
-function alertAdded() {
-    document.getElementById("main").innerHTML += `&lt;div id="alert" class="alert alert-success" role="alert">
-    A simple success alert—check it out!
-  &lt;/div>
-    `
-    setTimeout(() => {
-        document.getElementById("alert").style.transform = "translateY(500px)"
-    }, 2000);
-}
+
 
 function chooseUser() {
-    if (!show) {
-
-        document.getElementById("main").innerHTML += `&lt;div id="modal" class=" modal-body">
-        &lt;div id="modalcontent" class="modal-content">
-        &lt;/div>&lt;button onclick="chooseUser()" class="btn btn-primary">close&lt;/button>
-        &lt;/div>`
-        show = true;
+    Users;
+    if (!isfilled) {
         for (let i = 0; i &lt; Users.length; i++) {
-            document.getElementById("modalcontent").innerHTML += `
-            &lt;div id="${i}" onclick="selectUser(${i})" ${Users[i].email} class="user">
-           &lt;p class="name">${Users[i].name}&lt;/p>
-           &lt;img src="${Users[i].img}">
-           &lt;/div>`
+            document.getElementById("content").innerHTML += `
+            &lt;div id="${i}" onclick="selectUser(${i})" class="user">
+            &lt;img src="${Users[i].img}">
+            &lt;div class="username">
+                ${Users[i].username}
+            &lt;/div>
+        &lt;/div>`
         }
-
+        isfilled = true;
+        chooseUser();
+        if (!status) {
+            status = true;
+            for (let i = 0; i &lt; Users.length; i++) {
+                selectedUser.push('');
+            }
+        }
+    } else if (isfilled &amp;&amp; !show) {
+        document.getElementById("modal").classList.remove("d-none");
+        document.getElementById("main").style.filter = "blur(4px)";
+        show = true;
+        drawPickedUsers();
+    } else if (isfilled &amp;&amp; show) {
+        document.getElementById("modal").classList.add("d-none");
+        document.getElementById("main").style.filter = "blur(0px)";
+        drawPickedUsers();
+        show = false;
     }
+
 }
+
 
 function selectUser(i) {
-    document.getElementById(i).classList.add("added");
-    selectedUser.push(Users[i]);
-    localStorage.setItem('selectedUser', JSON.stringify(selectedUser));
-    console.table(selectedUser)
+
+    if (selectedUser[i] == Users[i]) {
+        document.getElementById(i).classList.remove("added");
+        selectedUser.splice(i, 1, "");
+        backend.setItem('selectedUser', selectUser);
+        document.getElementById("userimg").innerHTML = "";
+
+    } else {
+        if (i == i) {
+            document.getElementById(i).classList.add("added");
+            selectedUser.splice(i, 1, Users[i])
+            backend.setItem('selectedUser', selectUser);
+
+        }
+    }
 }
 
-/**
- * by register an new User create an JSON object with the data
- * @param {string} name - name of the user 
- * @param {string} email - email of the user
- * @param {string} img - img of the user
- * @returns 
- */
-function registerUser(name, email, img) {
-    return {
-        "name": name,
-        "email": email,
-        "img": img
+
+
+
+function cancle() {
+    removeAddedUserClass();
+    clearInput();
+}
+
+
+function drawPickedUsers() {
+    for (let i = 0; i &lt; selectedUser.length; i++) {
+        if (selectedUser[i] == Users[i]) {
+            document.getElementById("userimg").innerHTML += `&lt;img src="${selectedUser[i].img}">`
+        }
+        else if (selectedUser[i] == Users[i]) {
+            document.getElementById("userimg").innerHTML = "";
+        }
     }
-}</code></pre>
+
+}
+
+
+
+function removeAddedUserClass() {
+    for (let i = 0; i &lt; Users.length; i++) {
+        document.getElementById(i).classList.remove("added");
+    }
+}
+
+</code></pre>
         </article>
     </section>
 
@@ -161,13 +209,13 @@ function registerUser(name, email, img) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#alertAdded">alertAdded</a></li><li><a href="global.html#clearInput">clearInput</a></li><li><a href="global.html#createObj">createObj</a></li><li><a href="global.html#registerUser">registerUser</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#clearInput">clearInput</a></li><li><a href="global.html#createObj">createObj</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 10 2021 10:08:57 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 24 2021 21:13:14 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>

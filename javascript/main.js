@@ -6,37 +6,63 @@
  * @param {number} currentDraggedElement - the current number of the draged
  */
 let open = false;
-let errormessage = ["E-mail or Password not matching", "All fields requiered", "Your tasks has been created"]
+let errormessage = ["E-mail or Password not matching", "All fields requiered", "Your tasks has been created ✔"]
 let colorMap;
 let currentDraggedElement;
-
+let Users = [{
+    "username": "Alex",
+    "email": "alex@web.de",
+    "password": "1234",
+    "img": "../img/user.png"
+}, {
+    "username": "Junus",
+    "email": "junus@web.de",
+    "password": "1234",
+    "img": "../img/busy.png"
+}, {
+    "username": "Manuel",
+    "email": "manuel@web.de",
+    "password": "1234",
+    "img": "../img/userbusy.png"
+}, {
+    "username": "Christa",
+    "email": "christa@web.de",
+    "password": "1234",
+    "img": "../img/woman.png"
+}];
 
 
 
 async function init() {
     await downloadFromServer();
-    Users = backend.getItem('Users');
-    allTasks = backend.getItem('allTasks');
-    selectedUser = backend.getItem('selctedUser');
+    checkJSOn();
+    Users = JSON.parse(backend.getItem('Users')) || [];
+    allTasks = JSON.parse(backend.getItem('allTasks')) || [];
+    selectedUser = JSON.parse(backend.getItem('selectedUser')) || [];
+    if (window.location.href.indexOf("addTask") > -1) {
+        document.getElementById("date").value = today;
+    }
     if (window.location.href.indexOf('index') > -1) {
-        getData();
+        loadLogin();
         console.log("index")
-    } if (window.location.href.indexOf('list') > -1) {
+    }
+    if (window.location.href.indexOf('list') > -1) {
         loadList();
         console.log("list")
     } if (window.location.href.indexOf('matrix') > -1) {
         fillArray();
-        console.log("array")
+        console.log("matrix")
     }
 }
 
+window.addEventListener("DOMContentLoaded", creatingHeader);
 
 /**
- * generating the HTML for the header 
+ * generating the HTML of the header in case of location is "index" nothing happens else header will be created
  */
-document.addEventListener("DOMContentLoaded", () => {
-    if(window.location.href.indexOf('index')> -1){}
-    else{
+function creatingHeader() {
+    if (window.location.href.indexOf('index') > -1) { }
+    else {
         document.getElementById("body").innerHTML += `<header id="header"> 
         <nav id="nav">
         <button id="menubutton"> <span > </span> </button>
@@ -58,7 +84,8 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Hey, nice to see you! Enjoy my code 😊❤")
         document.getElementById("menubutton").addEventListener("click", openResponsiveMenu);
     }
-});
+}
+
 
 
 /**
@@ -112,7 +139,7 @@ function drop(ev) {
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
     allTasks[currentDraggedElement].priority = ev.target.id;
-    backend.setItem("allTasks", allTasks);
+    backend.setItem("allTasks", JSON.stringify(allTasks));
     clearContainer();
     fillArray();
 }
@@ -135,13 +162,18 @@ function openResponsiveMenu() {
 }
 
 
-function getData() {
-    console.log(backend.getItem("Users"))
-    Users.push(createUser('Alex', 'alex@web.de', '1234', '../img/user.png'))
-    Users.push(createUser('Junus', 'Junus@web.de', '1234', '../img/busy.png'))
-    Users.push(createUser('Manuel', 'Manuel@web.de', '1234', '../img/userbusy.png'))
-    Users.push(createUser('Christa', 'Christa@web.de', '1234', '../img/woman.png'))
-    backend.setItem('Users', Users);
-    console.log(backend.getItem("Users"))
+function loadLogin() {
     window.location.href = "../html/login.html";
+}
+
+function checkJSOn() {
+    if (backend.getItem("Users") == null) {
+        backend.setItem("Users", JSON.stringify(Users));
+        console.log("Users not ok")
+        checkJSOn();
+    }
+    if (backend.getItem("allTasks") == null) {
+        console.log("allTasks not ok")
+        backend.setItem("allTasks", "");
+    }
 }

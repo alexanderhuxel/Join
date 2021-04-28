@@ -1,6 +1,12 @@
-allTasks = JSON.parse(localStorage.getItem('allTasks')) || [];
+allTasks = JSON.parse(backend.getItem('allTasks'));
+/**
+ * generating the HTML of each listitem within a nested Forloop with different parameters
+ * @param {number} i start value of 0 increase every loop
+ * @param {number} x start value of 0 increase every loop
+ * @param {number} y start value of 100 increase very loop
+ */
 function fillArray() {
-    let array = backend.getItem("allTasks");
+    let array = JSON.parse(backend.getItem("allTasks"));
     for (let i = 0, y = 100; i < array.length; i++, y++) {
         document.getElementById(array[i].priority).innerHTML += `
      <div id="${i}" draggable="true" ondragstart="drag(event,${i})" class="card">
@@ -28,11 +34,11 @@ function fillArray() {
 
          </div>
      </div>
- `  
+ `
         if (array[i].user.length == 0) {
             console.log("User.legth == 0")
         }
-        else{
+        else {
             for (let x = 0; x < array[i].user.length; x++) {
                 if (array[i].user[x].img == undefined) {
                 } else {
@@ -45,11 +51,11 @@ function fillArray() {
         document.getElementById(i).style.borderColor = colorMap.get(array[i].category);
     }
 }
-
-function deleteListItem(i) {
-    allTasks.splice(i, 1);
-    localStorage.setItem('allTasks', JSON.stringify(allTasks));
-    if (window.location.href.indexOf('list') > -1) {
+/**
+ * splice the selected item out of the array and save it to the database
+ * if the location is "list" run loadlist() if the location is "matrix" run clearContainer() and fillArray()
+ * @param {number} i position in the array allTasks 
+ * @example if (window.location.href.indexOf('list') > -1) {
         document.getElementById("list").innerHTML = "";
         loadList();
     }
@@ -57,8 +63,27 @@ function deleteListItem(i) {
         clearContainer();
         fillArray();
     }
+ */
+function deleteListItem(i) {
+    allTasks = JSON.parse(backend.getItem("allTasks"));
+    allTasks.splice(i, 1);
+    backend.setItem('allTasks', JSON.stringify(allTasks));
+    if (window.location.href.indexOf('list') > -1) {
+        document.getElementById("list").innerHTML = "";
+        loadList();
+    } if (window.location.href.indexOf("matrix") > -1) {
+        clearContainer();
+        fillArray();
+    }
 }
 
+/**
+ * @param {array} containerids an array of the container ids
+ * clear the innerHTML of the container in the loop
+ * @example for (let i = 0; i < 4; i++) {
+        document.getElementById(containerids[i]).innerHTML = "";
+    }
+ */
 function clearContainer() {
     let containerids = ["do", "schedule", "delegate", "eliminate"];
     for (let i = 0; i < 4; i++) {

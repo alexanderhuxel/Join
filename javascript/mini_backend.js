@@ -70,8 +70,8 @@ function loadJSONFromServerOld() {
 }
 
 
-setURL('http://alexander-huxel.developerakademie.com/smallest_backend_ever');
 
+setURL('http://alexander-huxel.developerakademie.com/smallest_backend_ever');
 
 /**
  * Saves a JSON or JSON Array to the Server
@@ -102,6 +102,7 @@ function saveJSONToServer() {
 
 function determineProxySettings() {
     return '';
+
     if (window.location.href.indexOf('.developerakademie.com') > -1) {
         return '';
     } else {

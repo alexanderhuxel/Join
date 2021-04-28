@@ -1,5 +1,12 @@
+/**
+ * generating the HTML of each listitem within a nested Forloop with different parameters
+ * @param {number} i start value of 0 increase every loop
+ * @param {number} x start value of 0 increase every loop
+ * @param {number} y start value of 100 increase very loop
+ */
 function loadList() {
-    let array = backend.getItem("allTasks");
+    let array = JSON.parse(backend.getItem("allTasks"));
+    console.log(array.length)
     for (let i = 0, y = 100; i < array.length; i++, y++) {
         document.getElementById("list").innerHTML += ` <div id="${i}"  class="list-item">
         <div id="${y}" class="first">       
@@ -33,8 +40,8 @@ function loadList() {
                 }
             }
         }
-        
-            document.getElementById(i).style.borderColor = colorMap.get(array[i].category);
-        }
+
+        document.getElementById(i).style.borderColor = colorMap.get(array[i].category);
+    }
 }
 
