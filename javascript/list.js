@@ -6,7 +6,6 @@
  */
 function loadList() {
     let array = JSON.parse(backend.getItem("allTasks"));
-    console.log(array.length)
     for (let i = 0, y = 100; i < array.length; i++, y++) {
         document.getElementById("list").innerHTML += ` <div id="${i}"  class="list-item">
         <div id="${y}" class="first">       

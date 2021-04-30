@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: mini_backend.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: mini_backend.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>let jsonFromServer = {};
+let BASE_SERVER_URL;
+
+const backend = {
+    setItem: function (key, item) {
+        jsonFromServer[key] = item;
+        return saveJSONToServer();
+    },
+    getItem: function (key) {
+        if (!jsonFromServer[key]) {
+            return null;
+        }
+        return jsonFromServer[key];
+    },
+    deleteItem: function (key) {
+        delete jsonFromServer[key];
+        return saveJSONToServer();
+    }
+};
+window.onload = async function () {
+    downloadFromServer();
+}
+
+async function downloadFromServer() {
+    let result = await loadJSONFromServer();
+    jsonFromServer = JSON.parse(result);
+    // console.log('Loaded', result);
+}
+
+function setURL(url) {
+    BASE_SERVER_URL = url;
+}
+
+/**
+ * Loads a JSON or JSON Array to the Server
+ * payload {JSON | Array} - The payload you want to store
+ */
+
+async function loadJSONFromServer() {
+    let response = await fetch(BASE_SERVER_URL + '/nocors.php?json=database&amp;noache=' + (new Date().getTime()));
+    return await response.text();
+
+}
+
+function loadJSONFromServerOld() {
+    return new Promise(function (resolve, reject) {
+        let xhttp = new XMLHttpRequest();
+        let proxy = determineProxySettings();
+        let serverURL = proxy + BASE_SERVER_URL + '/nocors.php?json=database&amp;noache=' + (new Date().getTime());
+
+
+
+
+        xhttp.open('GET', serverURL);
+
+        xhttp.onreadystatechange = function (oEvent) {
+            if (xhttp.readyState === 4) {
+                if (xhttp.status >= 200 &amp;&amp; xhttp.status &lt;= 399) {
+                    resolve(xhttp.responseText);
+                } else {
+                    reject(xhttp.statusText);
+                }
+            }
+        };
+
+        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhttp.send();
+
+    });
+}
+
+
+
+setURL('http://alexander-huxel.developerakademie.com/smallest_backend_ever');
+
+/**
+ * Saves a JSON or JSON Array to the Server
+ */
+function saveJSONToServer() {
+    return new Promise(function (resolve, reject) {
+        let xhttp = new XMLHttpRequest();
+        let proxy = determineProxySettings();
+        let serverURL = proxy + BASE_SERVER_URL + '/save_json.php';
+        xhttp.open('POST', serverURL);
+
+        xhttp.onreadystatechange = function (oEvent) {
+            if (xhttp.readyState === 4) {
+                if (xhttp.status >= 200 &amp;&amp; xhttp.status &lt;= 399) {
+                    resolve(xhttp.responseText);
+                } else {
+                    reject(xhttp.statusText);
+                }
+            }
+        };
+
+        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhttp.send(JSON.stringify(jsonFromServer));
+
+    });
+}
+
+
+function determineProxySettings() {
+    return '';
+
+    if (window.location.href.indexOf('.developerakademie.com') > -1) {
+        return '';
+    } else {
+        return 'https://cors-anywhere.herokuapp.com/';
+    }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addTask">addTask</a></li><li><a href="global.html#alertFade">alertFade</a></li><li><a href="global.html#cancle">cancle</a></li><li><a href="global.html#changeForm">changeForm</a></li><li><a href="global.html#checkJSOn">checkJSOn</a></li><li><a href="global.html#chooseUser">chooseUser</a></li><li><a href="global.html#clearContainer">clearContainer</a></li><li><a href="global.html#clearDrawedUsers">clearDrawedUsers</a></li><li><a href="global.html#clearInput">clearInput</a></li><li><a href="global.html#colorMap">colorMap</a></li><li><a href="global.html#createObj">createObj</a></li><li><a href="global.html#createUser">createUser</a></li><li><a href="global.html#creatingHeader">creatingHeader</a></li><li><a href="global.html#deleteListItem">deleteListItem</a></li><li><a href="global.html#drawPickedUsers">drawPickedUsers</a></li><li><a href="global.html#drop">drop</a></li><li><a href="global.html#fillArray">fillArray</a></li><li><a href="global.html#generatingUserList">generatingUserList</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#loadJSONFromServer">loadJSONFromServer</a></li><li><a href="global.html#loadList">loadList</a></li><li><a href="global.html#loadLogin">loadLogin</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#open">open</a></li><li><a href="global.html#openResponsiveMenu">openResponsiveMenu</a></li><li><a href="global.html#removeAddedUserClass">removeAddedUserClass</a></li><li><a href="global.html#saveJSONToServer">saveJSONToServer</a></li><li><a href="global.html#selectUser">selectUser</a></li><li><a href="global.html#signUp">signUp</a></li><li><a href="global.html#usersetting">usersetting</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Fri Apr 30 2021 14:21:30 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

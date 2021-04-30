@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: matrix.js</title>
+    <title>JSDoc: Source: list.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: matrix.js</h1>
+    <h1 class="page-title">Source: list.js</h1>
 
     
 
@@ -26,97 +26,53 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>allTasks = JSON.parse(backend.getItem('allTasks'));
-/**
+            <pre class="prettyprint source linenums"><code>/**
  * generating the HTML of each listitem within a nested Forloop with different parameters
  * @param {number} i start value of 0 increase every loop
  * @param {number} x start value of 0 increase every loop
  * @param {number} y start value of 100 increase very loop
  */
-function fillArray() {
+function loadList() {
     let array = JSON.parse(backend.getItem("allTasks"));
     for (let i = 0, y = 100; i &lt; array.length; i++, y++) {
-        document.getElementById(array[i].priority).innerHTML += `
-     &lt;div id="${i}" draggable="true" ondragstart="drag(event,${i})"  class="card">
-         &lt;div class="left">
-             &lt;div class="top-bar">
-                 &lt;p>${array[i].date}&lt;/p>
-                 &lt;svg onclick="deleteListItem(${i})" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
+        document.getElementById("list").innerHTML += ` &lt;div id="${i}"  class="list-item">
+        &lt;div id="${y}" class="first">       
+        &lt;/div>
+        &lt;div class="second">
+        &lt;p>${array[i].title}&lt;/p>
+        &lt;p>${array[i].description}&lt;/p>
+        &lt;/div>
+        &lt;div class="third">
+        &lt;p>${array[i].category}&lt;/p>
+        &lt;/div>
+        &lt;svg onclick="deleteListItem(${i})" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
                      class="bi bi-x-circle-fill" viewBox="0 0 16 16">
                      &lt;path
                          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
                  &lt;/svg>
-             &lt;/div>
-             &lt;div class="text-bar">
-                 &lt;p>${array[i].title}&lt;/p>
-                 &lt;p>${array[i].description}&lt;/p>
-             &lt;/div>
-             &lt;div class="bottom-bar">
-                 &lt;button class="btn  btn-primary btn-sm">${array[i].category}&lt;/button>
-                 &lt;div id="${y}" class="users">
-                    
-                 &lt;/div>
-             &lt;/div>
-         &lt;/div>
-         &lt;div class="right">
-
-         &lt;/div>
-     &lt;/div>
- `
+        &lt;/div>
+        `
         if (array[i].user.length == 0) {
-        }
-        else {
+        } else {
             for (let x = 0; x &lt; array[i].user.length; x++) {
-                if (array[i].user[x].img == undefined) {
+                if (array[i].user[x].username == undefined) {
                 } else {
-                    document.getElementById(y).innerHTML += `
+                    document.getElementById(y).innerHTML += `&lt;div class="user">
                     &lt;img src="${array[i].user[x].img}">
+                    &lt;div class="user-data">
+                    &lt;p>${array[i].user[x].username}&lt;/p>
+                    &lt;p>${array[i].user[x].email}&lt;/p>
+                    &lt;/div>
                     &lt;/div>`
                 }
             }
         }
+
         document.getElementById(i).style.borderColor = colorMap.get(array[i].category);
     }
 }
-/**
- * splice the selected item out of the array and save it to the database
- * if the location is "list" run loadlist() if the location is "matrix" run clearContainer() and fillArray()
- * @param {number} i position in the array allTasks 
- * @example if (window.location.href.indexOf('list') > -1) {
-        document.getElementById("list").innerHTML = "";
-        loadList();
-    }
-    if (window.location.href.indexOf('matrix') > -1) {
-        clearContainer();
-        fillArray();
-    }
- */
-function deleteListItem(i) {
-    allTasks = JSON.parse(backend.getItem("allTasks"));
-    allTasks.splice(i, 1);
-    backend.setItem('allTasks', JSON.stringify(allTasks));
-    if (window.location.href.indexOf('list') > -1) {
-        document.getElementById("list").innerHTML = "";
-        loadList();
-    } if (window.location.href.indexOf("matrix") > -1) {
-        clearContainer();
-        fillArray();
-    }
-}
 
-/**
- * @param {array} containerids an array of the container ids
- * clear the innerHTML of the container in the loop
- * @example for (let i = 0; i &lt; 4; i++) {
-        document.getElementById(containerids[i]).innerHTML = "";
-    }
- */
-function clearContainer() {
-    let containerids = ["do", "schedule", "delegate", "eliminate"];
-    for (let i = 0; i &lt; 4; i++) {
-        document.getElementById(containerids[i]).innerHTML = "";
-    }
-}</code></pre>
+</code></pre>
         </article>
     </section>
 

@@ -32,7 +32,11 @@ let Users = [{
 }];
 
 
-
+/**
+ * @property {function} downloadFromServer download data from server
+ * @description
+ * checking for location and run different funtion
+ */
 async function init() {
     await downloadFromServer();
     checkJSOn();
@@ -44,14 +48,11 @@ async function init() {
     }
     if (window.location.href.indexOf('index') > -1) {
         loadLogin();
-        console.log("index")
     }
     if (window.location.href.indexOf('list') > -1) {
         loadList();
-        console.log("list")
     } if (window.location.href.indexOf('matrix') > -1) {
         fillArray();
-        console.log("matrix")
     }
 }
 
@@ -133,7 +134,12 @@ function drag(ev, id) {
     ev.dataTransfer.setData("text", ev.target.id);
     currentDraggedElement = id;
 }
-
+/**
+ * the drop function of W3C
+ * splice the currentelemnt into the current array (div)
+ * clearing the container 
+ * and refill the container
+ */
 function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
@@ -144,7 +150,7 @@ function drop(ev) {
     fillArray();
 }
 /**
- * @param {boolean}  status - the status if the menu is currently opend 
+ * @property {boolean}  open - the status if the menu is currently opend 
  * adding some css styles to open the responsive menu
  */
 function openResponsiveMenu() {
@@ -161,19 +167,23 @@ function openResponsiveMenu() {
     }
 }
 
-
+/**
+ * change the location to login
+ */
 function loadLogin() {
     window.location.href = "../html/login.html";
 }
 
+/**
+ * checking if the backend is filled 
+ * in case of null fill the array 
+ */
 function checkJSOn() {
     if (backend.getItem("Users") == null) {
         backend.setItem("Users", JSON.stringify(Users));
-        console.log("Users not ok")
         checkJSOn();
     }
     if (backend.getItem("allTasks") == null) {
-        console.log("allTasks not ok")
         backend.setItem("allTasks", "");
     }
 }

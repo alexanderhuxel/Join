@@ -9,7 +9,7 @@ function fillArray() {
     let array = JSON.parse(backend.getItem("allTasks"));
     for (let i = 0, y = 100; i < array.length; i++, y++) {
         document.getElementById(array[i].priority).innerHTML += `
-     <div id="${i}" draggable="true" ondragstart="drag(event,${i})" class="card">
+     <div id="${i}" draggable="true" ondragstart="drag(event,${i})"  class="card">
          <div class="left">
              <div class="top-bar">
                  <p>${array[i].date}</p>
@@ -36,7 +36,6 @@ function fillArray() {
      </div>
  `
         if (array[i].user.length == 0) {
-            console.log("User.legth == 0")
         }
         else {
             for (let x = 0; x < array[i].user.length; x++) {

@@ -1,4 +1,32 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: addTask.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: addTask.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * @var click 
  * @var alert the status of the alert
  * @var show the visibility of the dialog
@@ -95,26 +123,26 @@ function clearInput() {
     document.getElementById("description").value = "";
     selectedUser = [];
     backend.setItem('selectedUser', "");
-    document.getElementById("imgs").innerHTML = ` <svg onclick="chooseUser()" xmlns="http://www.w3.org/2000/svg" id="svg" width="30"
+    document.getElementById("imgs").innerHTML = ` &lt;svg onclick="chooseUser()" xmlns="http://www.w3.org/2000/svg" id="svg" width="30"
     height="30" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-    <path
+    &lt;path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+    &lt;path
         d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-</svg>`;
+&lt;/svg>`;
 }
 
 /**
- * <b>sorry for this dirty solution </b> <br>
- * incase the dialog is not filled the dialog will be filled <br>
- * else if isfilled && !show open the dialog <br>
- * else if isfilled  && show close the dialog <br>
+ * &lt;b>sorry for this dirty solution &lt;/b> &lt;br>
+ * incase the dialog is not filled the dialog will be filled &lt;br>
+ * else if isfilled &amp;&amp; !show open the dialog &lt;br>
+ * else if isfilled  &amp;&amp; show close the dialog &lt;br>
  * @property {function} generatingUserList - genertes the userlist
  * @property {function} clearDrawedUsers - clear the drawed users
  * @property {function} drawPickedUsers - draw the picked user
  * @example
  *  Users = JSON.parse(backend.getItem("Users"));
     if (!isfilled) {
-        for (let i = 0; i < Users.length; i++) {
+        for (let i = 0; i &lt; Users.length; i++) {
             document.getElementById("content").innerHTML += generatingUserList(i, Users);
         }
         isfilled = true;
@@ -122,18 +150,18 @@ function clearInput() {
         if (!status) {
             status = true;
             if (!usersetting) {
-                for (let i = 0; i < Users.length; i++) {
+                for (let i = 0; i &lt; Users.length; i++) {
                     selectedUser.push('');
                 } usersetting = true;
             }
         }
-    } else if (isfilled && !show) {
+    } else if (isfilled &amp;&amp; !show) {
         document.getElementById("modal").classList.remove("d-none");
         document.getElementById("main").style.filter = "blur(8px)";
         show = true;
         clearDrawedUsers();
         drawPickedUsers();
-    } else if (isfilled && show) {
+    } else if (isfilled &amp;&amp; show) {
         document.getElementById("modal").classList.add("d-none");
         document.getElementById("main").style.filter = "blur(0px)";
         clearDrawedUsers();
@@ -143,7 +171,7 @@ function clearInput() {
 function chooseUser() {
     Users = JSON.parse(backend.getItem("Users"));
     if (!isfilled) {
-        for (let i = 0; i < Users.length; i++) {
+        for (let i = 0; i &lt; Users.length; i++) {
             document.getElementById("content").innerHTML += generatingUserList(i, Users);
         }
         isfilled = true;
@@ -151,18 +179,18 @@ function chooseUser() {
         if (!status) {
             status = true;
             if (!usersetting) {
-                for (let i = 0; i < Users.length; i++) {
+                for (let i = 0; i &lt; Users.length; i++) {
                     selectedUser.push('');
                 } usersetting = true;
             }
         }
-    } else if (isfilled && !show) {
+    } else if (isfilled &amp;&amp; !show) {
         document.getElementById("modal").classList.remove("d-none");
         document.getElementById("main").style.filter = "blur(8px)";
         show = true;
         clearDrawedUsers();
         drawPickedUsers();
-    } else if (isfilled && show) {
+    } else if (isfilled &amp;&amp; show) {
         document.getElementById("modal").classList.add("d-none");
         document.getElementById("main").style.filter = "blur(0px)";
         clearDrawedUsers();
@@ -173,7 +201,7 @@ function chooseUser() {
 }
 
 /**
- * checking if the classlist of the element contains ("added"), in case remove the class and slice out of the array <br>
+ * checking if the classlist of the element contains ("added"), in case remove the class and slice out of the array &lt;br>
  * checking of the classlist of the element contains ("user"), in case add ("added") and push tot he array 
  * @param {i} i index of the the element 
  * @property {array} selectedUser - array of all selectedUsers
@@ -186,7 +214,7 @@ function selectUser(i) {
         backend.setItem('selectedUser', selectUser);
         document.getElementById("userimg").innerHTML = "";
     } else {
-        if (i == i && document.getElementById(i).classList.contains('user')) {
+        if (i == i &amp;&amp; document.getElementById(i).classList.contains('user')) {
             document.getElementById(i).classList.add("added");
             selectedUser.splice(i, 1, Users[i])
             backend.setItem('selectedUser', selectUser);
@@ -210,10 +238,10 @@ function cancle() {
  * draw the img of the selectedUser
  */
 function drawPickedUsers() {
-    for (let i = 0; i < selectedUser.length; i++) {
+    for (let i = 0; i &lt; selectedUser.length; i++) {
         if (selectedUser[i] == "") {
         } else {
-            document.getElementById("userimg").innerHTML += `<img src="${selectedUser[i].img}">`
+            document.getElementById("userimg").innerHTML += `&lt;img src="${selectedUser[i].img}">`
         }
     }
 }
@@ -228,7 +256,7 @@ function clearDrawedUsers() {
  * remove all the class ("added") of all users in the array 
  */
 function removeAddedUserClass() {
-    for (let i = 0; i < Users.length; i++) {
+    for (let i = 0; i &lt; Users.length; i++) {
         document.getElementById(i).classList.remove("added");
     }
 }
@@ -241,10 +269,32 @@ function removeAddedUserClass() {
  */
 function generatingUserList(i, array) {
     return `
-    <div id="${i}" onclick="selectUser(${i})" class="user">
-    <img src="${Users[i].img}">
-    <div class="username">
+    &lt;div id="${i}" onclick="selectUser(${i})" class="user">
+    &lt;img src="${Users[i].img}">
+    &lt;div class="username">
         ${Users[i].username}
-    </div>
-</div>`
-}
+    &lt;/div>
+&lt;/div>`
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addTask">addTask</a></li><li><a href="global.html#alertFade">alertFade</a></li><li><a href="global.html#cancle">cancle</a></li><li><a href="global.html#changeForm">changeForm</a></li><li><a href="global.html#checkJSOn">checkJSOn</a></li><li><a href="global.html#chooseUser">chooseUser</a></li><li><a href="global.html#clearContainer">clearContainer</a></li><li><a href="global.html#clearDrawedUsers">clearDrawedUsers</a></li><li><a href="global.html#clearInput">clearInput</a></li><li><a href="global.html#colorMap">colorMap</a></li><li><a href="global.html#createObj">createObj</a></li><li><a href="global.html#createUser">createUser</a></li><li><a href="global.html#creatingHeader">creatingHeader</a></li><li><a href="global.html#deleteListItem">deleteListItem</a></li><li><a href="global.html#drawPickedUsers">drawPickedUsers</a></li><li><a href="global.html#drop">drop</a></li><li><a href="global.html#fillArray">fillArray</a></li><li><a href="global.html#generatingUserList">generatingUserList</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#loadJSONFromServer">loadJSONFromServer</a></li><li><a href="global.html#loadList">loadList</a></li><li><a href="global.html#loadLogin">loadLogin</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#open">open</a></li><li><a href="global.html#openResponsiveMenu">openResponsiveMenu</a></li><li><a href="global.html#removeAddedUserClass">removeAddedUserClass</a></li><li><a href="global.html#saveJSONToServer">saveJSONToServer</a></li><li><a href="global.html#selectUser">selectUser</a></li><li><a href="global.html#signUp">signUp</a></li><li><a href="global.html#usersetting">usersetting</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Fri Apr 30 2021 14:21:30 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -26,9 +26,7 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>
-
-// allTasks = JSON.parse(localStorage.getItem('allTasks')) || [];
+            <pre class="prettyprint source linenums"><code>// allTasks = JSON.parse(localStorage.getItem('allTasks')) || [];
 // selectedUser = JSON.parse(localStorage.getItem('selectedUser')) || [];
 // Users = JSON.parse(localStorage.getItem('Users')) || [];
 let click = false;
@@ -36,6 +34,7 @@ let alert = false;
 let show = false;
 let isfilled = false;
 let status = false;
+let usersetting = false;
 selectedUser = [];
 var today = new Date();
 var dd = String(today.getDate()).padStart(2, '0');
@@ -43,13 +42,9 @@ var mm = String(today.getMonth() + 1).padStart(2, '0');
 var yyyy = today.getFullYear();
 today = yyyy + '-' + mm + '-' + dd;
 
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("date").value = today;
-})
 
 
 function addTask() {
-    console.log("test")
     let description = document.getElementById("description").value;
     let title = document.getElementById("title").value;
     let date = document.getElementById("date").value;
@@ -58,17 +53,14 @@ function addTask() {
     let importance = document.getElementById("importance").options[selectorimportance].value;
     let category = document.getElementById("category").options[selectorcategory].value;
     allTasks.push(createObj(title, date, category, description, importance, selectedUser))
-    backend.setItem('allTasks', allTasks);
-    backend.setItem('selectedUser', "");
-    backend.setItem('selectedUser', selectUser)
+    backend.setItem('allTasks', JSON.stringify(allTasks));
+    backend.setItem('selectedUser', JSON.stringify(""));
+    backend.setItem('selectedUser', JSON.stringify(selectedUser));
     alertFade(errormessage[2], 'success', 'translateY(70vh)');
     clearInput();
-    console.log(backend.getItem('allTasks'))
-    if (show) {
-        chooseUser();
+    if (selectedUser.length > 0) {
         removeAddedUserClass();
     }
-
 }
 
 /**
@@ -101,7 +93,6 @@ function createObj(title, date, category, description, importance, selectedUser,
  * clearing the inputfields
  */
 function clearInput() {
-    console.log("clear")
     document.getElementById("title").value = "";
     document.getElementById("importance").value;
     document.getElementById("date").value = today;
@@ -118,7 +109,7 @@ function clearInput() {
 
 
 function chooseUser() {
-    Users;
+    Users = JSON.parse(backend.getItem("Users"));
     if (!isfilled) {
         for (let i = 0; i &lt; Users.length; i++) {
             document.getElementById("content").innerHTML += `
@@ -133,18 +124,22 @@ function chooseUser() {
         chooseUser();
         if (!status) {
             status = true;
-            for (let i = 0; i &lt; Users.length; i++) {
-                selectedUser.push('');
+            if (!usersetting) {
+                for (let i = 0; i &lt; Users.length; i++) {
+                    selectedUser.push('');
+                } usersetting = true;
             }
         }
     } else if (isfilled &amp;&amp; !show) {
         document.getElementById("modal").classList.remove("d-none");
-        document.getElementById("main").style.filter = "blur(4px)";
+        document.getElementById("main").style.filter = "blur(8px)";
         show = true;
+        clearDrawedUsers();
         drawPickedUsers();
     } else if (isfilled &amp;&amp; show) {
         document.getElementById("modal").classList.add("d-none");
         document.getElementById("main").style.filter = "blur(0px)";
+        clearDrawedUsers();
         drawPickedUsers();
         show = false;
     }
@@ -154,18 +149,16 @@ function chooseUser() {
 
 function selectUser(i) {
 
-    if (selectedUser[i] == Users[i]) {
+    if (document.getElementById(i).classList.contains('added')) {
         document.getElementById(i).classList.remove("added");
         selectedUser.splice(i, 1, "");
         backend.setItem('selectedUser', selectUser);
         document.getElementById("userimg").innerHTML = "";
-
     } else {
-        if (i == i) {
+        if (i == i &amp;&amp; document.getElementById(i).classList.contains('user')) {
             document.getElementById(i).classList.add("added");
             selectedUser.splice(i, 1, Users[i])
             backend.setItem('selectedUser', selectUser);
-
         }
     }
 }
@@ -181,17 +174,16 @@ function cancle() {
 
 function drawPickedUsers() {
     for (let i = 0; i &lt; selectedUser.length; i++) {
-        if (selectedUser[i] == Users[i]) {
+        if (selectedUser[i] == "") {
+        } else {
             document.getElementById("userimg").innerHTML += `&lt;img src="${selectedUser[i].img}">`
         }
-        else if (selectedUser[i] == Users[i]) {
-            document.getElementById("userimg").innerHTML = "";
-        }
     }
-
 }
 
-
+function clearDrawedUsers() {
+    document.getElementById("userimg").innerHTML = "";
+}
 
 function removeAddedUserClass() {
     for (let i = 0; i &lt; Users.length; i++) {
@@ -209,13 +201,13 @@ function removeAddedUserClass() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#clearInput">clearInput</a></li><li><a href="global.html#createObj">createObj</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#alertFade">alertFade</a></li><li><a href="global.html#changeForm">changeForm</a></li><li><a href="global.html#clearContainer">clearContainer</a></li><li><a href="global.html#clearInput">clearInput</a></li><li><a href="global.html#colorMap">colorMap</a></li><li><a href="global.html#createObj">createObj</a></li><li><a href="global.html#createUser">createUser</a></li><li><a href="global.html#creatingHeader">creatingHeader</a></li><li><a href="global.html#deleteListItem">deleteListItem</a></li><li><a href="global.html#fillArray">fillArray</a></li><li><a href="global.html#loadJSONFromServer">loadJSONFromServer</a></li><li><a href="global.html#loadList">loadList</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#open">open</a></li><li><a href="global.html#openResponsiveMenu">openResponsiveMenu</a></li><li><a href="global.html#saveJSONToServer">saveJSONToServer</a></li><li><a href="global.html#signUp">signUp</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Sat Apr 24 2021 21:13:14 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Fri Apr 30 2021 12:58:50 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>
