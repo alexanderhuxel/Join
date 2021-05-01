@@ -71,7 +71,7 @@ function loadJSONFromServerOld() {
 
 
 
-setURL('https://alexhuxel.de/projekte/smallest_backend_ever');
+setURL('https://alexhuxel.de/smallest_backend_ever');
 
 /**
  * Saves a JSON or JSON Array to the Server

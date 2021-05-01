@@ -46,7 +46,7 @@ async function init() {
     if (window.location.href.indexOf("addTask") > -1) {
         document.getElementById("date").value = today;
     }
-    if (window.location.href.indexOf('index') > -1) {
+    if (window.location.href == 'https://alexhuxel.de/join/') {
         document.getElementById("loadingscreen").classList.add("d-none");
         loadLogin();
     }
@@ -63,7 +63,7 @@ window.addEventListener("DOMContentLoaded", creatingHeader);
  * generating the HTML of the header in case of location is "index" nothing happens else header will be created
  */
 function creatingHeader() {
-    if (window.location.href.indexOf('index') > -1) { }
+    if (window.location.href == 'https://alexhuxel.de/join/') { }
     else {
         document.getElementById("body").innerHTML += `<header id="header"> 
         <nav id="nav">
@@ -78,7 +78,7 @@ function creatingHeader() {
         <li><a class="link" href="../html/help.html">Help</a></li>
         <li><a class="link" href="../html/imprint.html">Impressum</a></li>
         <li><a class="link" href="../html/dataprotection.html">Datenschutz</a></li>
-        <li><a class="link" href="../html/index.html">Log Out</a></li>
+        <li><a class="link" href="https://alexhuxel.de/join/html/login.html">Log Out</a></li>
         </ul>
         </nav>
         
@@ -172,7 +172,7 @@ function openResponsiveMenu() {
  * change the location to login
  */
 function loadLogin() {
-    window.location.href = "../html/login.html";
+    window.location.href = "html/login.html";
 }
 
 /**
