@@ -39,6 +39,7 @@ let Users = [{
  */
 async function init() {
     await downloadFromServer();
+    document.getElementById("loadingscreen").classList.add("d-none");
     checkJSOn();
     Users = JSON.parse(backend.getItem('Users')) || [];
     allTasks = JSON.parse(backend.getItem('allTasks')) || [];

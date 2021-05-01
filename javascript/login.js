@@ -31,13 +31,13 @@ function login() {
  * @param {string} password  password of the created user
  * @param {function} createUser  all data of the function parameter
  */
-function signUp() {
+async function signUp() {
     email = document.getElementById("email").value;
     username = document.getElementById("username").value;
     password = document.getElementById("password").value;
-    Users = JSON.parse(backend.getItem('Users'));
+    Users = JSON.parse(backend.getItem('Users')) || [];
     Users.push(createUser(username, email, password, "../img/busy.png"));
-    backend.setItem('Users', JSON.stringify(Users));
+    await backend.setItem('Users', JSON.stringify(Users));
     setTimeout(() => {
         window.location = "../html/addTask.html"
     }, 200);

@@ -1,0 +1,42 @@
+@import ../style/root.sass
+body
+    display: flex
+    justify-content: center
+    align-items: center
+    background: $background
+    #loadingscreen
+        display: flex
+        flex-direction: column
+        text-align: center
+        color: $container
+        img
+            width: 100px
+            height: 100px
+        span
+            display: flex
+            p
+                font-size: 1.3rem
+                &:nth-of-type(2)
+                    letter-spacing: 5px
+                    animation: blink 3s infinite
+                    animation-delay: 225ms
+                    &:before
+                        margin-left: 10px
+                        content: "."
+                        animation: blink 3s infinite
+                    &:after
+                        animation: blink 3s infinite
+                        animation-delay: 500ms
+                        content: "."
+
+@keyframes blink
+    0%
+        opacity: 1
+    25%
+        opacity: 0
+    50%
+        opacity: 1
+    75%
+        opacity: 0
+    100%
+        opacity: 1
