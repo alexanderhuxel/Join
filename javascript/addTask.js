@@ -248,3 +248,4 @@ function generatingUserList(i, array) {
     </div>
 </div>`
 }
+
